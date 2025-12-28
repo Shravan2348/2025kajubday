@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18 Years | For Her</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --bg: #050505; --gold: #D4AF37; --frosting: #ffffff; --cake-body: #fff9fa; --piping: #f7e1e4; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .header { text-align: center; margin-top: 40px; z-index: 10; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 5px; }
+        .sub { color: var(--gold); letter-spacing: 3px; font-size: 0.9rem; text-transform: uppercase; }
+        .cake-stage { position: relative; margin-top: 130px; width: 350px; height: 300px; display: flex; flex-direction: column; align-items: center; }
+        .tier { position: relative; background: var(--cake-body); border-radius: 50% / 15%; box-shadow: inset 0 -15px 30px rgba(0,0,0,0.1), 0 10px 40px rgba(0,0,0,0.6); background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9) 0%, transparent 100%); }
+        .tier::after { content: ''; position: absolute; top: 15px; left: 0; width: 100%; height: 25px; background: white; border-radius: 0 0 50% 50% / 0 0 100% 100%; z-index: 4; pointer-events: none; clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 90% 100%, 80% 50%, 70% 100%, 60% 50%, 50% 100%, 40% 50%, 30% 100%, 20% 50%, 10% 100%, 0% 50%); }
+        .top-tier { width: 180px; height: 85px; z-index: 5; margin-bottom: -35px; }
+        .bottom-tier { width: 260px; height: 110px; z-index: 1; }
+        .surface { position: absolute; top: 0; width: 100%; height: 40px; background: var(--frosting); border-radius: 50%; z-index: 6; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); background-image: repeating-radial-gradient(circle at center, transparent, transparent 4px, rgba(0,0,0,0.01) 4px, rgba(0,0,0,0.01) 8px); }
+        .piping-ring { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border: 6px dotted var(--piping); border-radius: 50%; z-index: 7; opacity: 0.7; pointer-events: none; }
+        .heart-candle { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 50px; height: 55px; cursor: pointer; z-index: 100; }
+        .heart-outline { fill: rgba(212, 175, 55, 0.15); stroke: var(--gold); stroke-width: 2.5; filter: drop-shadow(0 0 10px var(--gold)); }
+        .candle-field { position: absolute; top: 0; width: 100%; height: 40px; z-index: 10; }
+        .guest-candle { position: absolute; width: 8px; height: 32px; border-radius: 4px; z-index: 11; transform-origin: bottom center; box-shadow: inset -2px 0 2px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.3); }
+        .flame { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); width: 10px; height: 16px; background: radial-gradient(circle at bottom, #fff, #ffd700, #ff4500); border-radius: 50% 50% 20% 20%; box-shadow: 0 0 15px #ff8c00; animation: flicker 0.1s infinite alternate; }
+        @keyframes flicker { 0% { transform: translateX(-50%) scale(0.9) skewX(-2deg); } 100% { transform: translateX(-50%) scale(1.1) skewX(2deg); } }
+        .controls { margin: 60px 0; text-align: center; background: rgba(20,20,20,0.9); padding: 30px; border-radius: 25px; border: 1px solid #333; width: 90%; max-width: 380px; backdrop-filter: blur(10px); }
+        .btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; transition: 0.3s; margin-top: 20px; width: 100%; }
+        .btn:hover:not(:disabled) { background: var(--gold); color: black; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); }
+        .btn:disabled { border-color: #444; color: #444; cursor: not-allowed; }
+        #popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0a0a0a; border: 1px solid var(--gold); padding: 40px; z-index: 1000; text-align: center; border-radius: 15px; box-shadow: 0 0 100px black; width: 80%; max-width: 400px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>For The One & Only</h1>
+        <div class="sub" id="countDisplay">Connecting...</div>
+    </div>
+
+    <div class="cake-stage">
+        <div class="top-tier tier">
+            <div class="surface">
+                <div class="piping-ring"></div>
+                <div class="heart-candle" onclick="window.showShravanMessage()">
+                    <svg viewBox="0 0 32 32" class="heart-outline"><path d="M16 28.5L14.1 26.7C7.1 20.4 2.5 16.2 2.5 11C2.5 6.6 5.9 3.2 10.3 3.2C12.8 3.2 15.1 4.4 16.6 6.3C18.1 4.4 20.4 3.2 22.9 3.2C27.3 3.2 30.7 6.6 30.7 11C30.7 16.2 26.1 20.4 19.1 26.7L16 28.5Z"/></svg>
+                    <div class="flame"></div>
+                </div>
+                <div class="candle-field" id="candleLayer"></div>
+            </div>
+        </div>
+        <div class="bottom-tier tier"><div class="surface"><div class="piping-ring"></div></div></div>
+    </div>
+
+    <div class="controls">
+        <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 10px;">
+            <input type="color" id="candleColor" value="#D4AF37" style="border:none; width:45px; height:45px; border-radius:50%; cursor:pointer; background: transparent;">
+            <select id="candleDesign" style="background:#222; color:white; border:1px solid #444; padding:10px; border-radius:8px;">
+                <option value="solid">Solid Color</option>
+                <option value="striped">Striped</option>
+                <option value="dotted">Dotted</option>
+            </select>
+        </div>
+        <button class="btn" id="lightBtn" onclick="window.addGuestCandle()">Light Her Candle</button>
+    </div>
+
+    <div id="popup">
+        <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: #fff; line-height: 1.6;">
+            "The first light, lit by <span style="color:var(--gold); font-weight: bold;">Shravan</span> — I’ll be lighting them for you for the next 100 years."
+        </p>
+        <button class="btn" onclick="document.getElementById('popup').style.display='none'">Close</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPHhWTmAqPkZ8mRSGGxcBp3lgWUBzstMk",
+            authDomain: "website-665c0.firebaseapp.com",
+            projectId: "website-665c0",
+            storageBucket: "website-665c0.firebasestorage.app",
+            messagingSenderId: "831316473256",
+            appId: "1:831316473256:web:1671afdcfc4597383d199d",
+            measurementId: "G-DFC7C5VNMZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const candlesCol = collection(db, "candles");
+
+        // Constants
+        const MAX_CANDLES = 18; 
+        const MELT_TIME = 3 * 60 * 60 * 1000;
+
+        window.showShravanMessage = () => {
+            document.getElementById('popup').style.display = 'block';
+        };
+
+        window.addGuestCandle = async () => {
+            const btn = document.getElementById('lightBtn');
+            if(sessionStorage.getItem('has_lit')) {
+                alert("You've already lit a candle for her! Refresh to try again if it was a mistake.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "LIGHTING...";
+            const color = document.getElementById('candleColor').value;
+            const design = document.getElementById('candleDesign').value;
+
+            try {
+                await addDoc(candlesCol, {
+                    color,
+                    design,
+                    time: serverTimestamp()
+                });
+                sessionStorage.setItem('has_lit', 'true');
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 } });
+                btn.innerText = "ALREADY LIT";
+            } catch (e) {
+                console.error(e);
+                alert("Database Error: Check your Firebase console rules!");
+                btn.disabled = false;
+                btn.innerText = "LIGHT HER CANDLE";
+            }
+        };
+
+        onSnapshot(query(candlesCol, orderBy("time", "desc"), limit(MAX_CANDLES)), (snapshot) => {
+            const now = Date.now();
+            const validCandles = [];
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                if (data.time) {
+                    const candleTime = data.time.toMillis ? data.time.toMillis() : now;
+                    if (now - candleTime < MELT_TIME) {
+                        validCandles.push(data);
+                    }
+                } else {
+                    validCandles.push(data);
+                }
+            });
+
+            renderCandles(validCandles.reverse());
+        });
+
+        function renderCandles(candles) {
+            const layer = document.getElementById('candleLayer');
+            layer.innerHTML = '';
+            candles.forEach((c, i) => {
+                const candleEl = document.createElement('div');
+                candleEl.className = 'guest-candle';
+                
+                // Adjusting math for 18 candles
+                const angle = (i / MAX_CANDLES) * Math.PI * 2 + 0.8;
+                const x = 90 + Math.cos(angle) * 70 - 4; 
+                const y = 18 + Math.sin(angle) * 14;
+                
+                candleEl.style.left = `${x}px`;
+                candleEl.style.top = `${y}px`;
+                candleEl.style.backgroundColor = c.color;
+                candleEl.style.marginTop = "-30px";
+                
+                if(c.design === 'striped') candleEl.style.backgroundImage = "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px)";
+                if(c.design === 'dotted') candleEl.style.backgroundImage = "radial-gradient(circle, rgba(255,255,255,0.5) 1.5px, transparent 0)";
+                if(c.design !== 'solid') candleEl.style.backgroundSize = "8px 8px";
+                
+                const f = document.createElement('div');
+                f.className = 'flame';
+                candleEl.appendChild(f);
+                layer.appendChild(candleEl);
+            });
+            
+            document.getElementById('countDisplay').innerText = `${candles.length} / ${MAX_CANDLES} Candles Lit`;
+            
+            if(sessionStorage.getItem('has_lit')) {
+                const btn = document.getElementById('lightBtn');
+                btn.disabled = true;
+                btn.innerText = "ALREADY LIT";
+            }
+        }
+    </script>
+</body>
+</html>
