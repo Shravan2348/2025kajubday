@@ -7,7 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
         /* --- THE VINTAGE NEWSPAPER BASE --- */
-        body {
+        body 
+        <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+    <audio id="newsMusic" loop autoplay>
+        <source src="news_song.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicBtn" onclick="toggleMusic()" 
+            style="background: #1a1a1a; color: #f4f0e6; border: 3px double #f4f0e6; 
+                   padding: 10px 15px; font-family: 'Cinzel', serif; cursor: pointer; 
+                   box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        🔊 Play Theme
+    </button>
+</div>
+        {
             background-color: #2b2b2b; /* Dark background behind the paper */
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; margin: 0; padding: 20px;
@@ -215,7 +227,32 @@
             document.getElementById('exclusive-popup').style.display = 'flex';
         }
     </script>
+    <script>
+    function toggleMusic() {
+        const music = document.getElementById('newsMusic');
+        const btn = document.getElementById('musicBtn');
+        
+        if (music.paused) {
+            music.play();
+            btn.innerHTML = "🔇 Pause Theme";
+        } else {
+            music.pause();
+            btn.innerHTML = "🔊 Play Theme";
+        }
+    }
+
+    // Attempt Auto-Play
+    window.onload = function() {
+        const music = document.getElementById('newsMusic');
+        music.play().then(() => {
+            document.getElementById('musicBtn').innerHTML = "🔇 Pause Theme";
+        }).catch(() => {
+            console.log("Auto-play blocked, waiting for click.");
+        });
+    }
+</script>
 
 </body>
 
 </html>
+
