@@ -7,34 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
         /* --- THE VINTAGE NEWSPAPER BASE --- */
-        body 
-        <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-    <audio id="newsMusic" loop autoplay>
-        <source src="news_song.mp3" type="audio/mpeg">
-    </audio>
-    <button id="musicBtn" onclick="toggleMusic()" 
-            style="background: #1a1a1a; color: #f4f0e6; border: 3px double #f4f0e6; 
-                   padding: 10px 15px; font-family: 'Cinzel', serif; cursor: pointer; 
-                   box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-        🔊 Play Theme
-    </button>
-</div>
-        {
+        body {
             background-color: #2b2b2b; /* Dark background behind the paper */
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; margin: 0; padding: 20px;
             font-family: 'IM Fell English', serif;
+            overflow-x: hidden;
         }
 
         .newspaper {
             width: 100%; max-width: 800px;
-            background-color: #f4f0e6; /* NEWSPRINT BEIGE (Not yellow) */
-            background-image: url("https://www.transparenttextures.com/patterns/noise-lines.png"); /* Subtle texture */
+            background-color: #f4f0e6; /* NEWSPRINT BEIGE */
+            background-image: url("https://www.transparenttextures.com/patterns/noise-lines.png"); /* Texture */
             color: #1a1a1a;
             padding: 30px;
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            transform: rotate(-1deg); /* Slight tilt for realism */
+            transform: rotate(-1deg); /* Slight tilt */
             transition: transform 0.5s;
+            position: relative; /* Context for children */
         }
         .newspaper:hover { transform: rotate(0deg) scale(1.01); }
 
@@ -42,7 +32,7 @@
         header { text-align: center; border-bottom: 3px double #1a1a1a; margin-bottom: 20px; padding-bottom: 10px; }
         
         .brand {
-            font-family: 'UnifrakturMaguntia', cursive; /* The Gothic Font */
+            font-family: 'UnifrakturMaguntia', cursive;
             font-size: 4rem; margin: 0; line-height: 1;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
         }
@@ -68,42 +58,25 @@
         }
 
         /* --- THE MOVING PICTURE (MAGIC INK EFFECT) --- */
-.moving-img-container {
-    width: 100%; height: 350px;
-    border: 3px solid #1a1a1a;
-    padding: 5px; margin-bottom: 20px;
-    position: relative;
-    /* Ensure the background behind the video matches the paper exactly */
-    background-color: #f4f0e6; 
-    overflow: hidden;
-}
+        .moving-img-container {
+            width: 100%; height: 350px;
+            border: 3px solid #1a1a1a;
+            padding: 5px; margin-bottom: 20px;
+            position: relative;
+            background-color: #f4f0e6; 
+            overflow: hidden;
+        }
 
-.magic-video {
-    width: 100%; height: 100%; object-fit: cover;
-    
-    /* 1. Turn it Black & White */
-    /* 2. Crank the Contrast (Ink is harsh) */
-    /* 3. Increase brightness so the greys become white (and transparent) */
-    filter: grayscale(100%) contrast(200%) brightness(1.2);
-    
-    /* THE SECRET SAUCE: MULTIPLY */
-    /* This makes the video 'print' onto the paper color */
-    mix-blend-mode: multiply;
-    
-    /* Slight opacity to make it look faded/old */
-    opacity: 0.85; 
-}
+        .magic-video {
+            width: 100%; height: 100%; object-fit: cover;
+            /* MAGIC FILTER */
+            filter: grayscale(100%) contrast(150%) brightness(1.1);
+            mix-blend-mode: multiply; /* Burns the video into the paper */
+            opacity: 0.9; 
+        }
 
-/* OPTIONAL: OLD FILM GRAIN OVERLAY */
-.moving-img-container::after {
-    content: "";
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    /* Creates a subtle noise texture over the video */
-    background-image: url("https://www.transparenttextures.com/patterns/noise-lines.png");
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 2;
-}
+        .img-caption { font-size: 0.8rem; text-align: center; margin-top: 5px; font-style: italic; }
+
         /* --- THE COLUMNS --- */
         .content-grid {
             display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
@@ -145,6 +118,17 @@
             background: rgba(0,0,0,0.8);
         }
 
+        /* --- MUSIC PLAYER BUTTON --- */
+        .music-player-container {
+            position: fixed; bottom: 20px; right: 20px; z-index: 999;
+        }
+        .music-toggle {
+            background: #1a1a1a; color: #f4f0e6; border: 3px double #f4f0e6;
+            padding: 10px 15px; font-family: 'Cinzel', serif; cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5); font-size: 0.9rem;
+        }
+        .music-toggle:hover { background: #333; }
+
         /* Responsive */
         @media (max-width: 600px) {
             .brand { font-size: 3rem; }
@@ -155,12 +139,20 @@
 </head>
 <body>
 
+    <div class="music-player-container">
+        <audio id="newsMusic" loop>
+            <source src="news_song.mp3" type="audio/mpeg">
+        </audio>
+        <button id="musicBtn" class="music-toggle" onclick="toggleMusic()">🔊 Play Theme</button>
+    </div>
+
     <div class="newspaper">
         <header>
             <h1 class="brand">The 18th Chronicle</h1>
             <div class="meta-data">
                 <span>Vol. XVIII • Issue No. 1</span>
-                <span>Dec 29, 2025</span> <span>Price: One Smile</span>
+                <span>Dec 29, 2025</span> 
+                <span>Price: One Smile</span>
             </div>
         </header>
 
@@ -223,13 +215,35 @@
     </div>
 
     <script>
+        // FLEX POPUP
         function showFlex() {
             document.getElementById('exclusive-popup').style.display = 'flex';
         }
+
+        // MUSIC LOGIC
+        function toggleMusic() {
+            const music = document.getElementById('newsMusic');
+            const btn = document.getElementById('musicBtn');
+            
+            if (music.paused) {
+                music.play();
+                btn.innerHTML = "🔇 Pause Theme";
+            } else {
+                music.pause();
+                btn.innerHTML = "🔊 Play Theme";
+            }
+        }
+
+        // Attempt Auto-Play on Load
+        window.addEventListener('load', function() {
+            const music = document.getElementById('newsMusic');
+            music.play().then(() => {
+                document.getElementById('musicBtn').innerHTML = "🔇 Pause Theme";
+            }).catch(() => {
+                console.log("Auto-play blocked, waiting for click.");
+            });
+        });
     </script>
-   
+
 </body>
-
 </html>
-
-
