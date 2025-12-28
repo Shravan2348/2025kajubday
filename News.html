@@ -55,23 +55,43 @@
             text-align: center; font-style: italic; font-size: 1.2rem; margin-bottom: 20px; opacity: 0.8;
         }
 
-        /* --- THE MOVING PICTURE (MAGIC) --- */
-        .moving-img-container {
-            width: 100%; height: 350px;
-            border: 3px solid #1a1a1a;
-            padding: 5px; margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .magic-video {
-            width: 100%; height: 100%; object-fit: cover;
-            /* THE HARRY POTTER FILTER */
-            filter: sepia(80%) grayscale(20%) contrast(1.2) brightness(0.9);
-            mix-blend-mode: multiply;
-        }
+        /* --- THE MOVING PICTURE (MAGIC INK EFFECT) --- */
+.moving-img-container {
+    width: 100%; height: 350px;
+    border: 3px solid #1a1a1a;
+    padding: 5px; margin-bottom: 20px;
+    position: relative;
+    /* Ensure the background behind the video matches the paper exactly */
+    background-color: #f4f0e6; 
+    overflow: hidden;
+}
 
-        .img-caption { font-size: 0.8rem; text-align: center; margin-top: 5px; font-style: italic; }
+.magic-video {
+    width: 100%; height: 100%; object-fit: cover;
+    
+    /* 1. Turn it Black & White */
+    /* 2. Crank the Contrast (Ink is harsh) */
+    /* 3. Increase brightness so the greys become white (and transparent) */
+    filter: grayscale(100%) contrast(200%) brightness(1.2);
+    
+    /* THE SECRET SAUCE: MULTIPLY */
+    /* This makes the video 'print' onto the paper color */
+    mix-blend-mode: multiply;
+    
+    /* Slight opacity to make it look faded/old */
+    opacity: 0.85; 
+}
 
+/* OPTIONAL: OLD FILM GRAIN OVERLAY */
+.moving-img-container::after {
+    content: "";
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    /* Creates a subtle noise texture over the video */
+    background-image: url("https://www.transparenttextures.com/patterns/noise-lines.png");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 2;
+}
         /* --- THE COLUMNS --- */
         .content-grid {
             display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
@@ -197,4 +217,5 @@
     </script>
 
 </body>
+
 </html>
