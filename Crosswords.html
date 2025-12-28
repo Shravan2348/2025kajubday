@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Know Her? | 18th</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a; color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+
+        h1 { font-family: 'Cinzel', serif; color: #D4AF37; margin-bottom: 5px; text-align: center; }
+        .subtitle { font-size: 0.9rem; opacity: 0.7; margin-bottom: 30px; text-align: center; }
+
+        /* INTRO SCREEN */
+        #intro-screen {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 60vh; width: 100%;
+        }
+        .name-input {
+            background: rgba(255,255,255,0.1); border: 1px solid #444;
+            padding: 15px; color: white; font-family: 'Cinzel'; font-size: 1.2rem;
+            text-align: center; border-radius: 5px; width: 250px; margin-bottom: 20px;
+        }
+        .start-btn {
+            background: #D4AF37; color: #000; padding: 12px 40px;
+            font-weight: bold; border: none; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        .start-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+
+        /* GAME BOARD */
+        #game-board { display: none; width: 100%; max-width: 600px; flex-direction: column; gap: 20px; padding-bottom: 50px; }
+
+        .puzzle-row {
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .clue { font-size: 0.9rem; margin-bottom: 10px; color: #aaa; font-style: italic; }
+        .clue strong { color: #D4AF37; margin-right: 5px; }
+        
+        .tiles-container { display: flex; gap: 5px; flex-wrap: wrap; }
+        
+        .tile {
+            width: 28px; height: 34px;
+            background: transparent;
+            border: 1px solid #555;
+            color: white; text-align: center; font-size: 1.1rem;
+            text-transform: uppercase; font-weight: bold;
+            border-radius: 3px;
+        }
+        .tile:focus { border-color: #D4AF37; outline: none; background: rgba(212, 175, 55, 0.1); }
+        
+        /* Correct/Wrong States */
+        .correct .tile { border-color: #4caf50; color: #4caf50; }
+        .wrong .tile { border-color: #f44336; }
+
+        #submitBtn {
+            margin-top: 10px; width: 100%; padding: 15px;
+            background: #222; color: #fff; border: 1px solid #444;
+            font-family: 'Cinzel'; cursor: pointer; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        #submitBtn:hover { background: #333; }
+
+        /* MODAL */
+        #result-modal {
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.9); z-index: 100;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .modal-box { background: #111; border: 1px solid #333; padding: 40px; text-align: center; max-width: 80%; }
+        
+        .close-btn {
+            margin-top: 20px; background: transparent; border: 1px solid white; color: white;
+            padding: 8px 20px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .close-btn:hover { background: white; color: black; }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <h1>The Archive Quiz</h1>
+        <p class="subtitle">Prove you know the Birthday Girl.</p>
+        <input type="text" id="playerName" class="name-input" placeholder="Enter Your Name">
+        <button class="start-btn" onclick="startGame()">Start Quiz</button>
+    </div>
+
+    <div id="game-board">
+        
+        <div class="puzzle-row">
+            <div class="clue"><strong>1.</strong> The city where her soul belongs (9)</div>
+            <div class="tiles-container" data-answer="VRINDAVAN">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>2.</strong> Her aesthetic / favorite color (4)</div>
+            <div class="tiles-container" data-answer="BLUE">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>3.</strong> Her dream campus (4)</div>
+            <div class="tiles-container" data-answer="NIFT">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>4.</strong> The boy who built this website (7)</div>
+            <div class="tiles-container" data-answer="SHRAVAN">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>5.</strong> The magic number we are celebrating (8)</div>
+            <div class="tiles-container" data-answer="EIGHTEEN">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>6.</strong> Her Zodiac Sign (9)</div>
+            <div class="tiles-container" data-answer="CAPRICORN">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>7.</strong> The month an angel was born (8)</div>
+            <div class="tiles-container" data-answer="DECEMBER">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>8.</strong> Her favorite hobby (Besides looking cute) (5)</div>
+            <div class="tiles-container" data-answer="SLEEP">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>9.</strong> One word to describe her (4)</div>
+            <div class="tiles-container" data-answer="DIVA">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>10.</strong> Her relationship status (5)</div>
+            <div class="tiles-container" data-answer="TAKEN">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <button id="submitBtn" onclick="submitGame()">Submit Answers</button>
+    </div>
+
+    <div id="result-modal">
+        <div class="modal-box">
+            <h2 id="modal-title" style="color:#D4AF37; font-family:'Cinzel'">RESULTS</h2>
+            <p id="modal-msg" style="margin:20px 0; font-size:1.2rem;">Calculating...</p>
+            <p style="font-size:0.8rem; opacity:0.5">Your score (and answers) have been recorded.</p>
+            <button class="close-btn" onclick="document.getElementById('result-modal').style.display='none'">CLOSE</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPHhWTmAqPkZ8mRSGGxcBp3lgWUBzstMk",
+            authDomain: "website-665c0.firebaseapp.com",
+            projectId: "website-665c0",
+            storageBucket: "website-665c0.firebasestorage.app",
+            messagingSenderId: "831316473256",
+            appId: "1:831316473256:web:1671afdcfc4597383d199d",
+            measurementId: "G-DFC7C5VNMZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const resultsCol = collection(db, "crossword_results");
+
+        let currentPlayer = "";
+
+        // AUTO-TAB LOGIC
+        const allTiles = document.querySelectorAll('.tile');
+        allTiles.forEach((tile, index) => {
+            tile.addEventListener('input', (e) => {
+                if(e.target.value.length === 1) {
+                    if(index < allTiles.length - 1) allTiles[index + 1].focus();
+                }
+            });
+            tile.addEventListener('keydown', (e) => {
+                if(e.key === 'Backspace' && e.target.value === '') {
+                    if(index > 0) allTiles[index - 1].focus();
+                }
+            });
+        });
+
+        window.startGame = () => {
+            const input = document.getElementById('playerName');
+            const name = input.value.trim();
+            if(!name) { alert("Please enter your name!"); return; }
+            currentPlayer = name;
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('game-board').style.display = 'flex';
+        };
+
+        window.submitGame = async () => {
+            let score = 0;
+            const total = 10;
+            const rows = document.querySelectorAll('.puzzle-row');
+            const btn = document.getElementById('submitBtn');
+            
+            // OBJECT TO STORE THEIR RAW INPUTS
+            let userAnswers = {};
+
+            rows.forEach((row, index) => {
+                const container = row.querySelector('.tiles-container');
+                const correctAnswer = container.getAttribute('data-answer');
+                const inputs = container.querySelectorAll('input');
+                let playerAnswer = "";
+                
+                inputs.forEach(input => playerAnswer += input.value.toUpperCase());
+
+                // SAVE INPUT (KEY: Q1_VRINDAVAN, VALUE: USER_INPUT)
+                // We use index+1 so keys are Q1, Q2, etc.
+                userAnswers[`Q${index+1}_${correctAnswer}`] = playerAnswer || "(BLANK)";
+
+                if(playerAnswer === correctAnswer) {
+                    score++;
+                    row.classList.add('correct');
+                } else {
+                    row.classList.add('wrong');
+                    // Reveal Answer Logic (Optional)
+                    inputs.forEach((input, i) => {
+                        input.value = correctAnswer[i];
+                        input.style.color = '#f44336';
+                    });
+                }
+            });
+
+            // Show Result
+            const modal = document.getElementById('result-modal');
+            const title = document.getElementById('modal-title');
+            const msg = document.getElementById('modal-msg');
+            
+            modal.style.display = 'flex';
+            title.innerText = `SCORE: ${score} / ${total}`;
+            
+            if(score === 10) msg.innerText = "PERFECT! You are a true friend.";
+            else if (score >= 7) msg.innerText = "Solid effort. You know her well!";
+            else msg.innerText = "Oof. Do you even know her? 😂";
+
+            // Save to DB
+            btn.disabled = true;
+            btn.innerText = "SAVING...";
+
+            try {
+                await addDoc(resultsCol, {
+                    name: currentPlayer,
+                    score: score,
+                    totalQuestions: total,
+                    answers: userAnswers, // THIS SENDS THE RAW INPUTS
+                    timestamp: serverTimestamp()
+                });
+                btn.innerText = "SAVED";
+            } catch(e) {
+                console.error("Error saving score", e);
+                btn.innerText = "Error (Check Net)";
+            }
+        };
+    </script>
+</body>
+</html>
