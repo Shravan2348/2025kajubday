@@ -12,24 +12,39 @@
         .header { text-align: center; margin-top: 40px; z-index: 10; }
         h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 5px; }
         .sub { color: var(--gold); letter-spacing: 3px; font-size: 0.9rem; text-transform: uppercase; }
+        
         .cake-stage { position: relative; margin-top: 130px; width: 350px; height: 300px; display: flex; flex-direction: column; align-items: center; }
-        .tier { position: relative; background: var(--cake-body); border-radius: 50% / 15%; box-shadow: inset 0 -15px 30px rgba(0,0,0,0.1), 0 10px 40px rgba(0,0,0,0.6); background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9) 0%, transparent 100%); }
+        .tier { position: relative; background: var(--cake-body); border-radius: 50% / 15%; box-shadow: inset 0 -15px 30px rgba(0,0,0,0.1), 0 10px 40px rgba(0,0,0,0.6); }
         .tier::after { content: ''; position: absolute; top: 15px; left: 0; width: 100%; height: 25px; background: white; border-radius: 0 0 50% 50% / 0 0 100% 100%; z-index: 4; pointer-events: none; clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 90% 100%, 80% 50%, 70% 100%, 60% 50%, 50% 100%, 40% 50%, 30% 100%, 20% 50%, 10% 100%, 0% 50%); }
         .top-tier { width: 180px; height: 85px; z-index: 5; margin-bottom: -35px; }
         .bottom-tier { width: 260px; height: 110px; z-index: 1; }
-        .surface { position: absolute; top: 0; width: 100%; height: 40px; background: var(--frosting); border-radius: 50%; z-index: 6; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); background-image: repeating-radial-gradient(circle at center, transparent, transparent 4px, rgba(0,0,0,0.01) 4px, rgba(0,0,0,0.01) 8px); }
-        .piping-ring { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border: 6px dotted var(--piping); border-radius: 50%; z-index: 7; opacity: 0.7; pointer-events: none; }
+        .surface { position: absolute; top: 0; width: 100%; height: 40px; background: var(--frosting); border-radius: 50%; z-index: 6; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); }
+        
         .heart-candle { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 50px; height: 55px; cursor: pointer; z-index: 100; }
         .heart-outline { fill: rgba(212, 175, 55, 0.15); stroke: var(--gold); stroke-width: 2.5; filter: drop-shadow(0 0 10px var(--gold)); }
-        .candle-field { position: absolute; top: 0; width: 100%; height: 40px; z-index: 10; }
-        .guest-candle { position: absolute; width: 8px; height: 32px; border-radius: 4px; z-index: 11; transform-origin: bottom center; box-shadow: inset -2px 0 2px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.3); }
+        
+        /* GUEST CANDLE STYLING */
+        .guest-candle { position: absolute; width: 8px; height: 32px; border-radius: 4px; z-index: 11; transform-origin: bottom center; transition: 0.3s; }
+        .guest-candle:hover { transform: scale(1.2); z-index: 200; }
+        
+        /* NAME TOOLTIP */
+        .guest-candle::before {
+            content: attr(data-name); position: absolute; top: -35px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.8); color: var(--gold); padding: 4px 8px; border-radius: 4px; font-size: 10px;
+            white-space: nowrap; opacity: 0; transition: 0.3s; pointer-events: none; border: 1px solid var(--gold);
+        }
+        .guest-candle:hover::before { opacity: 1; }
+
         .flame { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); width: 10px; height: 16px; background: radial-gradient(circle at bottom, #fff, #ffd700, #ff4500); border-radius: 50% 50% 20% 20%; box-shadow: 0 0 15px #ff8c00; animation: flicker 0.1s infinite alternate; }
-        @keyframes flicker { 0% { transform: translateX(-50%) scale(0.9) skewX(-2deg); } 100% { transform: translateX(-50%) scale(1.1) skewX(2deg); } }
+        @keyframes flicker { 0% { transform: translateX(-50%) scale(0.9); } 100% { transform: translateX(-50%) scale(1.1); } }
+        
+        /* INPUT CONTROLS */
         .controls { margin: 60px 0; text-align: center; background: rgba(20,20,20,0.9); padding: 30px; border-radius: 25px; border: 1px solid #333; width: 90%; max-width: 380px; backdrop-filter: blur(10px); }
-        .btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; transition: 0.3s; margin-top: 20px; width: 100%; }
-        .btn:hover:not(:disabled) { background: var(--gold); color: black; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); }
-        .btn:disabled { border-color: #444; color: #444; cursor: not-allowed; }
-        #popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0a0a0a; border: 1px solid var(--gold); padding: 40px; z-index: 1000; text-align: center; border-radius: 15px; box-shadow: 0 0 100px black; width: 80%; max-width: 400px; }
+        .name-input { width: 100%; padding: 12px; background: #111; border: 1px solid #444; color: white; border-radius: 8px; margin-bottom: 15px; text-align: center; }
+        .btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; transition: 0.3s; width: 100%; }
+        .btn:hover:not(:disabled) { background: var(--gold); color: black; }
+        
+        #popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0a0a0a; border: 1px solid var(--gold); padding: 40px; z-index: 1000; text-align: center; border-radius: 15px; width: 80%; max-width: 400px; }
     </style>
 </head>
 <body>
@@ -42,7 +57,6 @@
     <div class="cake-stage">
         <div class="top-tier tier">
             <div class="surface">
-                <div class="piping-ring"></div>
                 <div class="heart-candle" onclick="window.showShravanMessage()">
                     <svg viewBox="0 0 32 32" class="heart-outline"><path d="M16 28.5L14.1 26.7C7.1 20.4 2.5 16.2 2.5 11C2.5 6.6 5.9 3.2 10.3 3.2C12.8 3.2 15.1 4.4 16.6 6.3C18.1 4.4 20.4 3.2 22.9 3.2C27.3 3.2 30.7 6.6 30.7 11C30.7 16.2 26.1 20.4 19.1 26.7L16 28.5Z"/></svg>
                     <div class="flame"></div>
@@ -50,19 +64,20 @@
                 <div class="candle-field" id="candleLayer"></div>
             </div>
         </div>
-        <div class="bottom-tier tier"><div class="surface"><div class="piping-ring"></div></div></div>
+        <div class="bottom-tier tier"><div class="surface"></div></div>
     </div>
 
     <div class="controls">
-        <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 10px;">
-            <input type="color" id="candleColor" value="#D4AF37" style="border:none; width:45px; height:45px; border-radius:50%; cursor:pointer; background: transparent;">
-            <select id="candleDesign" style="background:#222; color:white; border:1px solid #444; padding:10px; border-radius:8px;">
+        <input type="text" id="guestName" class="name-input" placeholder="Enter Your Name" maxlength="15">
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <input type="color" id="candleColor" value="#D4AF37" style="border:none; width:50px; height:45px; cursor:pointer; background:none;">
+            <select id="candleDesign" style="flex:1; background:#222; color:white; border:1px solid #444; padding:10px; border-radius:8px;">
                 <option value="solid">Solid Color</option>
                 <option value="striped">Striped</option>
                 <option value="dotted">Dotted</option>
             </select>
         </div>
-        <button class="btn" id="lightBtn" onclick="window.addGuestCandle()">Light Her Candle</button>
+        <button class="btn" id="lightBtn" onclick="window.addGuestCandle()">Light A Candle</button>
     </div>
 
     <div id="popup">
@@ -89,61 +104,41 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const candlesCol = collection(db, "candles");
+        const MAX_CANDLES = 18;
 
-        // Constants
-        const MAX_CANDLES = 18; 
-        const MELT_TIME = 3 * 60 * 60 * 1000;
-
-        window.showShravanMessage = () => {
-            document.getElementById('popup').style.display = 'block';
-        };
+        window.showShravanMessage = () => document.getElementById('popup').style.display = 'block';
 
         window.addGuestCandle = async () => {
+            const name = document.getElementById('guestName').value.trim();
             const btn = document.getElementById('lightBtn');
-            if(sessionStorage.getItem('has_lit')) {
-                alert("You've already lit a candle for her! Refresh to try again if it was a mistake.");
-                return;
-            }
+
+            if(!name) { alert("Please enter your name first!"); return; }
+            if(sessionStorage.getItem('has_lit')) { alert("You've already lit a candle!"); return; }
 
             btn.disabled = true;
             btn.innerText = "LIGHTING...";
-            const color = document.getElementById('candleColor').value;
-            const design = document.getElementById('candleDesign').value;
 
             try {
                 await addDoc(candlesCol, {
-                    color,
-                    design,
+                    name: name,
+                    color: document.getElementById('candleColor').value,
+                    design: document.getElementById('candleDesign').value,
                     time: serverTimestamp()
                 });
                 sessionStorage.setItem('has_lit', 'true');
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 } });
                 btn.innerText = "ALREADY LIT";
             } catch (e) {
-                console.error(e);
-                alert("Database Error: Check your Firebase console rules!");
                 btn.disabled = false;
-                btn.innerText = "LIGHT HER CANDLE";
+                btn.innerText = "LIGHT A CANDLE";
+                alert("Error! Check Firebase rules.");
             }
         };
 
         onSnapshot(query(candlesCol, orderBy("time", "desc"), limit(MAX_CANDLES)), (snapshot) => {
-            const now = Date.now();
-            const validCandles = [];
-
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                if (data.time) {
-                    const candleTime = data.time.toMillis ? data.time.toMillis() : now;
-                    if (now - candleTime < MELT_TIME) {
-                        validCandles.push(data);
-                    }
-                } else {
-                    validCandles.push(data);
-                }
-            });
-
-            renderCandles(validCandles.reverse());
+            const candles = [];
+            snapshot.forEach(doc => candles.push(doc.data()));
+            renderCandles(candles.reverse());
         });
 
         function renderCandles(candles) {
@@ -152,8 +147,8 @@
             candles.forEach((c, i) => {
                 const candleEl = document.createElement('div');
                 candleEl.className = 'guest-candle';
+                candleEl.setAttribute('data-name', c.name || "Guest");
                 
-                // Adjusting math for 18 candles
                 const angle = (i / MAX_CANDLES) * Math.PI * 2 + 0.8;
                 const x = 90 + Math.cos(angle) * 70 - 4; 
                 const y = 18 + Math.sin(angle) * 14;
@@ -172,14 +167,7 @@
                 candleEl.appendChild(f);
                 layer.appendChild(candleEl);
             });
-            
             document.getElementById('countDisplay').innerText = `${candles.length} / ${MAX_CANDLES} Candles Lit`;
-            
-            if(sessionStorage.getItem('has_lit')) {
-                const btn = document.getElementById('lightBtn');
-                btn.disabled = true;
-                btn.innerText = "ALREADY LIT";
-            }
         }
     </script>
 </body>
