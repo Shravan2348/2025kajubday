@@ -227,32 +227,9 @@
             document.getElementById('exclusive-popup').style.display = 'flex';
         }
     </script>
-    <script>
-    function toggleMusic() {
-        const music = document.getElementById('newsMusic');
-        const btn = document.getElementById('musicBtn');
-        
-        if (music.paused) {
-            music.play();
-            btn.innerHTML = "🔇 Pause Theme";
-        } else {
-            music.pause();
-            btn.innerHTML = "🔊 Play Theme";
-        }
-    }
-
-    // Attempt Auto-Play
-    window.onload = function() {
-        const music = document.getElementById('newsMusic');
-        music.play().then(() => {
-            document.getElementById('musicBtn').innerHTML = "🔇 Pause Theme";
-        }).catch(() => {
-            console.log("Auto-play blocked, waiting for click.");
-        });
-    }
-</script>
-
+   
 </body>
 
 </html>
+
 
