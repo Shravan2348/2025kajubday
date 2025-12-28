@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dispenser of Joy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Cinzel:wght@700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a; color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0;
+            overflow: hidden; 
+        }
+
+        /* --- THE VENDING MACHINE --- */
+        .machine-container {
+            width: 380px; /* Made slightly wider to fit text */
+            height: 720px; /* Made slightly taller */
+            background: #222;
+            border-radius: 20px;
+            border: 4px solid #444;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            position: relative;
+            padding: 20px;
+            display: flex; flex-direction: column;
+        }
+
+        /* HEADER */
+        .machine-header {
+            text-align: center; font-family: 'Cinzel', serif;
+            color: #D4AF37; font-size: 1.5rem; margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            border-bottom: 2px solid #333; padding-bottom: 10px;
+        }
+
+        /* GLASS WINDOW */
+        .glass-window {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #555;
+            border-radius: 10px;
+            height: 420px; /* Taller for labels */
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            padding: 5px;
+            gap: 5px;
+        }
+
+        /* SHELF ITEMS */
+        .item-slot {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative;
+            background: rgba(255,255,255,0.02); /* Subtle shelf bg */
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 2px;
+        }
+        .item-icon {
+            font-size: 1.8rem; transition: 0.3s;
+            margin-bottom: 2px;
+        }
+        /* NEW LABEL STYLE */
+        .item-label {
+            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px;
+            color: #ccc; text-align: center; font-weight: 600;
+            margin-bottom: 2px; line-height: 1.1; width: 100%;
+        }
+        .item-code {
+            font-family: 'VT323', monospace; color: #D4AF37;
+            background: #111; padding: 0px 4px; font-size: 0.9rem;
+            border-radius: 3px;
+        }
+        
+        /* CONTROL PANEL */
+        .controls {
+            margin-top: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .display-screen {
+            background: #000; color: #0f0;
+            font-family: 'VT323', monospace; font-size: 1.5rem;
+            padding: 10px; width: 55%;
+            border: 2px inset #555; text-align: center;
+        }
+
+        .keypad {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 40%;
+        }
+        .key {
+            background: #333; color: white; border: 1px solid #555;
+            height: 30px; cursor: pointer;
+            font-family: 'Inter'; font-weight: bold; font-size: 0.8rem;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 4px; transition: 0.1s;
+        }
+        .key:active { background: #D4AF37; color: black; transform: scale(0.95); }
+        .key-enter { background: #D4AF37; color: black; grid-column: span 3; width: 100%; margin-top: 5px; }
+
+        /* PICKUP BIN */
+        .pickup-bin {
+            margin-top: auto; height: 60px;
+            background: #111; border: 2px solid #333;
+            border-radius: 0 0 10px 10px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; cursor: pointer; transition: 0.3s;
+        }
+        .pickup-bin:hover { background: #1a1a1a; }
+        .dropped-item {
+            font-size: 2.5rem; animation: dropBounce 0.6s ease-out;
+        }
+
+        /* --- THE MODAL (BIG MESSAGE) --- */
+        #message-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 200;
+            flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; text-align: center;
+        }
+
+        .modal-content {
+            background: #1a1a1a; border: 1px solid #D4AF37;
+            padding: 40px; max-width: 500px; width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            overflow-y: auto; max-height: 80vh;
+        }
+
+        .modal-icon { font-size: 4rem; margin-bottom: 20px; display: block; }
+        .modal-title { font-family: 'Cinzel'; color: #D4AF37; font-size: 2rem; margin-bottom: 20px; }
+        .modal-text { 
+            font-family: 'Inter'; line-height: 1.8; color: #ddd; font-size: 1.1rem; 
+            white-space: pre-wrap; /* Preserves your paragraphs */
+            text-align: left;
+        }
+
+        .close-btn {
+            margin-top: 30px; background: transparent; border: 1px solid #555;
+            color: #777; padding: 10px 30px; cursor: pointer;
+        }
+        .close-btn:hover { border-color: white; color: white; }
+
+        /* ANIMATIONS */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(2px) rotate(2deg); }
+            75% { transform: translateX(-2px) rotate(-2deg); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes dropBounce {
+            0% { transform: translateY(-100px); opacity: 0; }
+            60% { transform: translateY(0); opacity: 1; }
+            80% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .shaking { animation: shake 0.5s linear; }
+
+        /* RESPONSIVE */
+        @media (max-height: 750px) {
+            .machine-container { transform: scale(0.85); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="clickSound" src="click.mp3"></audio>
+    <audio id="dropSound" src="drop.mp3"></audio>
+
+    <div class="machine-container">
+        <div class="machine-header">THE COLLECTION</div>
+        
+        <div class="glass-window" id="grid">
+            </div>
+
+        <div class="controls">
+            <div class="display-screen" id="display">SELECT</div>
+            <div class="keypad">
+                <div class="key" onclick="typeKey('A')">A</div>
+                <div class="key" onclick="typeKey('B')">B</div>
+                <div class="key" onclick="typeKey('C')">C</div>
+                <div class="key" onclick="typeKey('D')">D</div>
+                <div class="key" onclick="typeKey('1')">1</div>
+                <div class="key" onclick="typeKey('2')">2</div>
+                <div class="key" onclick="typeKey('3')">3</div>
+                <div class="key" onclick="clearInput()">C</div>
+                <div class="key key-enter" onclick="dispense()">ENTER</div>
+            </div>
+        </div>
+
+        <div class="pickup-bin" id="bin" onclick="openMessage()">
+            <div style="font-size:0.8rem; opacity:0.5; font-family:'VT323'">COLLECT ITEM</div>
+        </div>
+    </div>
+
+    <div id="message-modal">
+        <div class="modal-content">
+            <span id="m-icon" class="modal-icon"></span>
+            <h2 id="m-title" class="modal-title"></h2>
+            <div id="m-text" class="modal-text"></div>
+            <button class="close-btn" onclick="closeModal()">CLOSE</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION: THE ITEMS ---
+        const items = [
+            // ROW A (Visuals)
+            { code: 'A1', icon: '👁️', label: 'The Eyes', title: "THE ABYSS" },
+            { code: 'A2', icon: '☀️', label: 'The Smile', title: "THE VOLTAGE" },
+            { code: 'A3', icon: '⏳', label: 'The Figure', title: "THE MASTERPIECE" },
+            // ROW B (Aura)
+            { code: 'B1', icon: '💃', label: 'Elegance', title: "THE CLASS" },
+            { code: 'B2', icon: '👠', label: 'Style', title: "THE DRIP" },
+            { code: 'B3', icon: '👑', label: 'Hair', title: "THE CROWN" },
+            // ROW C (Soul)
+            { code: 'C1', icon: '💛', label: 'Kindness', title: "PURE GOLD" },
+            { code: 'C2', icon: '🧠', label: 'Talent', title: "THE GENIUS" },
+            { code: 'C3', icon: '✨', label: 'Personality', title: "THE SPARK" },
+            // ROW D (Intimacy)
+            { code: 'D1', icon: '🎶', label: 'Voice', title: "THE MELODY" },
+            { code: 'D2', icon: '🤝', label: 'Hands', title: "THE ANCHOR" },
+            { code: 'D3', icon: '❤️', label: 'Her Love', title: "THE EVERYTHING" }
+        ];
+
+        // --- 2. PASTE YOUR LONG MESSAGES HERE ---
+        const messages = {
+            'A1': `They say eyes are the window to the soul, but looking into yours feels less like looking through a window and more like stepping into a cathedral. There is this myth in the world that the most beautiful eyes are the colors of the ocean or the sky—but whoever said that has clearly never drowned in the absolute, overwhelming depth of your brown.
+
+To call them just "brown" feels like an insult to the spectrum of color that exists within you. In the shade, they are dark mahogany, mysterious and intense, the kind of deep that keeps secrets I want to spend the rest of my life uncovering. But when the sunlight hits them? God, when the light hits them, they dissolve into pools of liquid honey and molten amber. It’s like watching a galaxy swirl inside a cup of black coffee.
+
+I have looked into these eyes and completely lost track of time, space, and my own name. It’s terrifying, actually. The way you hold my gaze makes me feel stripped down, like you can see parts of me I haven't even met yet. You look at me with this specific warmth that feels like coming in from the cold. It’s a gravitational pull. I don’t just look at them; I orbit them.`,
+            
+            'A2': `
+                (PASTE YOUR MESSAGE ABOUT HER SMILE HERE)
+            `,
+            'A3': `
+                (PASTE YOUR MESSAGE ABOUT HER FIGURE HERE)
+            `,
+            'B1': `
+                (PASTE YOUR MESSAGE ABOUT HER ELEGANCE HERE)
+            `,
+            'B2': `
+                (PASTE YOUR MESSAGE ABOUT HER STYLE HERE)
+            `,
+            'B3': `
+                (PASTE YOUR MESSAGE ABOUT HER HAIR HERE)
+            `,
+            'C1': `
+                (PASTE YOUR MESSAGE ABOUT HER KINDNESS HERE)
+            `,
+            'C2': `
+                (PASTE YOUR MESSAGE ABOUT HER TALENT HERE)
+            `,
+            'C3': `
+                (PASTE YOUR MESSAGE ABOUT HER PERSONALITY HERE)
+            `,
+            'D1': `
+                (PASTE YOUR MESSAGE ABOUT HER VOICE HERE)
+            `,
+            'D2': `
+                (PASTE YOUR MESSAGE ABOUT HER HANDS HERE)
+            `,
+            'D3': `
+                (PASTE YOUR MESSAGE ABOUT HER LOVE HERE)
+            `
+        };
+
+        // --- SYSTEM LOGIC ---
+        let currentInput = "";
+        const display = document.getElementById('display');
+        const bin = document.getElementById('bin');
+        let currentItem = null;
+        const clickSound = document.getElementById('clickSound');
+        const dropSound = document.getElementById('dropSound');
+
+        // Init Grid
+        const grid = document.getElementById('grid');
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'item-slot';
+            div.id = `slot-${item.code}`;
+            // ADDED LABEL DISPLAY HERE
+            div.innerHTML = `
+                <div class="item-icon">${item.icon}</div>
+                <div class="item-label">${item.label}</div>
+                <div class="item-code">${item.code}</div>
+            `;
+            grid.appendChild(div);
+        });
+
+        function playClick() {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(e => console.log("Audio waiting for interaction"));
+        }
+
+        function playDrop() {
+            dropSound.currentTime = 0;
+            dropSound.play();
+        }
+
+        function typeKey(key) {
+            playClick();
+            if (currentInput.length < 2) {
+                currentInput += key;
+                display.innerText = currentInput;
+            }
+        }
+
+        function clearInput() {
+            playClick();
+            currentInput = "";
+            display.innerText = "SELECT";
+        }
+
+        function dispense() {
+            playClick();
+            const item = items.find(i => i.code === currentInput);
+            
+            if (item) {
+                display.innerText = "DISPENSING...";
+                const slot = document.getElementById(`slot-${item.code}`);
+                const icon = slot.querySelector('.item-icon');
+                
+                // Shake Animation
+                icon.classList.add('shaking');
+                
+                setTimeout(() => {
+                    icon.classList.remove('shaking');
+                    // Drop to bin
+                    bin.innerHTML = `<div class="dropped-item">${item.icon}</div>`;
+                    playDrop(); // PLAY DROP SOUND HERE
+                    display.innerText = "ENJOY";
+                    currentItem = item;
+                    currentInput = "";
+                }, 1000);
+            } else {
+                display.innerText = "ERROR";
+                setTimeout(() => clearInput(), 1000);
+            }
+        }
+
+        function openMessage() {
+            if (!currentItem) return;
+            
+            document.getElementById('m-icon').innerText = currentItem.icon;
+            document.getElementById('m-title').innerText = currentItem.title;
+            // Get message from our list, or default text
+            document.getElementById('m-text').innerText = messages[currentItem.code].trim();
+            
+            document.getElementById('message-modal').style.display = 'flex';
+            
+            // Clear bin
+            bin.innerHTML = `<div style="font-size:0.8rem; opacity:0.5; font-family:'VT323'">COLLECT ITEM</div>`;
+            currentItem = null;
+            display.innerText = "SELECT";
+        }
+
+        function closeModal() {
+            document.getElementById('message-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
