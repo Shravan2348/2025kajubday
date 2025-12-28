@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt #0018 | For Her</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #1a1a1a; /* Dark background */
+            display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh;
+            font-family: 'VT323', monospace;
+            overflow-y: scroll; /* Allow scrolling */
+            padding-bottom: 50px;
+        }
+
+        /* THE RECEIPT CONTAINER */
+        .receipt-container {
+            margin-top: 50px;
+            width: 360px; /* Slightly wider to fit the text */
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+            /* Animation speed adjusted for length */
+            animation: printReceipt 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            transform-origin: top center;
+        }
+
+        .receipt {
+            background-color: #fdfdfd; /* Off-white thermal paper */
+            color: #222; /* Dark grey ink */
+            padding: 20px 25px;
+            position: relative;
+            
+            /* JAGGED BOTTOM EDGE */
+            clip-path: polygon(
+                0% 0%, 100% 0%, 100% 100%, 
+                98% 99%, 96% 100%, 94% 99%, 92% 100%, 90% 99%, 88% 100%, 86% 99%, 84% 100%, 82% 99%, 80% 100%, 
+                78% 99%, 76% 100%, 74% 99%, 72% 100%, 70% 99%, 68% 100%, 66% 99%, 64% 100%, 62% 99%, 60% 100%, 
+                58% 99%, 56% 100%, 54% 99%, 52% 100%, 50% 99%, 48% 100%, 46% 99%, 44% 100%, 42% 99%, 40% 100%, 
+                38% 99%, 36% 100%, 34% 99%, 32% 100%, 30% 99%, 28% 100%, 26% 99%, 24% 100%, 22% 99%, 20% 100%, 
+                18% 99%, 16% 100%, 14% 99%, 12% 100%, 10% 99%, 8% 100%, 6% 99%, 4% 100%, 2% 99%, 0% 100%
+            );
+            padding-bottom: 40px; 
+        }
+
+        /* HEADER */
+        .header { text-align: center; margin-bottom: 20px; }
+        h1 { margin: 0; font-size: 2rem; letter-spacing: 2px; text-transform: uppercase; }
+        .sub-head { font-size: 1.1rem; opacity: 0.8; margin-bottom: 10px; border-bottom: 1px dashed #222; padding-bottom: 10px; }
+        
+        .meta-info { display: flex; justify-content: space-between; font-size: 1rem; margin-bottom: 5px; }
+
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th { text-align: left; border-bottom: 1px dashed #222; padding-bottom: 5px; font-size: 1rem; }
+        td { padding: 8px 0; vertical-align: top; font-size: 1.1rem; border-bottom: 1px dotted rgba(0,0,0,0.1); }
+        .qty { width: 15%; }
+        .item { width: 55%; font-weight: bold; }
+        .price { width: 30%; text-align: right; }
+
+        /* TOTALS */
+        .totals { border-top: 1px dashed #222; padding-top: 10px; margin-bottom: 20px; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 1.2rem; }
+        .grand-total { font-size: 1.5rem; font-weight: bold; margin-top: 10px; }
+
+        /* FOOTER */
+        .footer { text-align: center; font-size: 1rem; opacity: 0.8; margin-top: 20px; }
+        .policy { margin: 15px 0; font-weight: bold; line-height: 1.4; border-top: 1px dashed #222; border-bottom: 1px dashed #222; padding: 10px 0; }
+        
+        /* BARCODE */
+        .barcode { 
+            height: 40px; width: 80%; margin: 20px auto; 
+            background: repeating-linear-gradient(
+                to right,
+                #000 0px, #000 2px,
+                transparent 2px, transparent 4px,
+                #000 4px, #000 5px,
+                transparent 5px, transparent 9px,
+                #000 9px, #000 12px,
+                transparent 12px, transparent 13px,
+                #000 13px, #000 15px,
+                transparent 15px, transparent 18px
+            );
+        }
+
+        .back-btn {
+            position: fixed; bottom: 20px; 
+            color: #fff; font-family: 'Inter'; text-decoration: none; 
+            font-size: 0.8rem; opacity: 0.5;
+            transition: 0.3s;
+        }
+        .back-btn:hover { opacity: 1; }
+
+        /* ANIMATION */
+        @keyframes printReceipt {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="receipt-container">
+        <div class="receipt">
+            <div class="header">
+                <h1>SHRAVAN & CO.</h1>
+                <div class="sub-head">Purveyors of Unconditional Love</div>
+                
+                <div class="meta-info">
+                    <span>ORDER #: 0018</span>
+                    <span>SERVER: BF</span>
+                </div>
+                <div class="meta-info">
+                    <span>CUSTOMER: HER</span>
+                    <span>DATE: NOW</span>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="qty">QTY</th>
+                        <th class="item">ITEM</th>
+                        <th class="price">COST</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="qty">1</td>
+                        <td class="item">Her Heart (Stolen)</td>
+                        <td class="price">My Sanity</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">2</td>
+                        <td class="item">Divine cute hands<br><span style="font-weight:normal; font-size:0.8em">(Locked with mine)</span></td>
+                        <td class="price">Never Letting Go</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">1</td>
+                        <td class="item">Sweater "Borrowed"</td>
+                        <td class="price">Gone 4ever</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">100</td>
+                        <td class="item">"Nothing to wear"</td>
+                        <td class="price">Closet is Full</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">-100</td>
+                        <td class="item">Food Bought<br><span style="font-weight:normal; font-size:0.8em">(She didn't eat)</span></td>
+                        <td class="price">I ate it</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">1%</td>
+                        <td class="item">Her Phone Battery</td>
+                        <td class="price">Stressful</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">12hr</td>
+                        <td class="item">Her "Nap"</td>
+                        <td class="price">Coma</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">5,284</td>
+                        <td class="item">Butterflies Given<br><span style="font-weight:normal; font-size:0.8em">(To Me)</span></td>
+                        <td class="price">Priceless</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">∞</td>
+                        <td class="item">Forehead Kisses</td>
+                        <td class="price">Free</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">1</td>
+                        <td class="item">Sparkle in her Eye</td>
+                        <td class="price">Deadly</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">365</td>
+                        <td class="item">Days Making Me Happy</td>
+                        <td class="price">My Heart</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">24/7</td>
+                        <td class="item">Melting My Heart</td>
+                        <td class="price">Liquid State</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">∞</td>
+                        <td class="item">Photos of Her</td>
+                        <td class="price">Storage Full</td>
+                    </tr>
+                     <tr>
+                        <td class="qty">1</td>
+                        <td class="item">Being The Most Amazing Person</td>
+                        <td class="price">Priceless</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">89</td>
+                        <td class="item">Tantrums Handled</td>
+                        <td class="price">Worth It</td>
+                    </tr>
+                    <tr>
+                        <td class="qty">∞</td>
+                        <td class="item">Arguments Won<br><span style="font-weight:normal; font-size:0.8em">(By Her)</span></td>
+                        <td class="price">My Dignity</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="totals">
+                <div class="total-row">
+                    <span>SUBTOTAL</span>
+                    <span>INFINITE LOVE</span>
+                </div>
+                <div class="total-row">
+                    <span>TAX</span>
+                    <span>100% LOYALTY</span>
+                </div>
+                <div class="total-row" style="margin-top:5px; font-size:0.9rem; opacity:0.7;">
+                    <span>TIP</span>
+                    <span>MY LAST NAME (Future)</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>TOTAL</span>
+                    <span>I'M YOURS</span>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="policy">
+                    *** RETURN POLICY ***<br>
+                    NO REFUNDS.<br>
+                    NO EXCHANGES.<br>
+                    YOU ARE STUCK WITH ME.
+                </div>
+                <div>CARD: **** **** **** H-E-R</div>
+                <div>AUTH CODE: H-E-D-W-I-G</div>
+                <div class="barcode"></div>
+                <div>THANK YOU FOR EXISTING</div>
+            </div>
+        </div>
+    </div>
+
+  
+
+</body>
+</html>
