@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Us.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #e0e0e0;
+            font-family: 'Cormorant Garamond', serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- THE CINEMATIC BACKGROUND --- */
+        #bg-video {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -1;
+            /* Heavy blur for dreamlike effect */
+            filter: blur(8px) brightness(0.4);
+            transform: scale(1.1);
+        }
+
+        /* --- THE SCROLL CONTAINER --- */
+        .scroll-container {
+            display: flex; flex-direction: column; align-items: center;
+            padding-bottom: 20vh;
+        }
+
+        /* --- THE TEXT BLOCKS --- */
+        .text-block {
+            min-height: 100vh; /* Each block takes full screen */
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
+            max-width: 800px; /* Wider for the bigger text */
+            padding: 40px 20px;
+            opacity: 0; 
+            transform: translateY(40px);
+            transition: opacity 2s ease-out, transform 2s ease-out;
+        }
+
+        .text-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fff;
+            margin-bottom: 35px; letter-spacing: 5px; text-transform: uppercase;
+            text-shadow: 0 0 25px rgba(255,255,255,0.4); /* Stronger glow for headers */
+            border-bottom: 1px solid rgba(212, 175, 55, 0.5);
+            padding-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.4rem; line-height: 2; color: #e0e0e0; margin-bottom: 30px;
+            font-weight: 400;
+            /* THE SUBTLE GLOW YOU ASKED FOR */
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .highlight { color: #D4AF37; font-weight: 600; font-style: italic; text-shadow: 0 0 10px rgba(212, 175, 55, 0.6); }
+        
+        .date-stamp { 
+            font-family: 'Cinzel'; border: 1px solid rgba(255,255,255,0.3); 
+            padding: 10px 30px; margin-bottom: 30px; 
+            letter-spacing: 3px; font-size: 1.2rem; color: #D4AF37;
+            background: rgba(0,0,0,0.4);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        /* MUSIC BUTTON */
+        .music-btn {
+            position: fixed; bottom: 30px; right: 30px; z-index: 100;
+            background: rgba(0,0,0,0.5); border: 1px solid #777; color: #777;
+            width: 50px; height: 50px; border-radius: 50%; 
+            cursor: pointer; transition: 0.5s; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .music-btn:hover { border-color: #D4AF37; color: #D4AF37; background: rgba(0,0,0,0.8); box-shadow: 0 0 10px #D4AF37; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            p { font-size: 1.15rem; }
+            .text-block { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="us.mp4" type="video/mp4">
+    </video>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="us_song.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-btn" onclick="toggleMusic()">⏸</button>
+
+    <div class="scroll-container">
+
+        <div class="text-block">
+            <h1>The Silence</h1>
+            <p>For the longest time, loving you was a quiet thing. A secret I kept tucked inside my ribs while we stood side by side as best friends. While you looked at the world, I was busy looking at you, memorizing the way you laughed, the way you spoke, the way you existed.</p>
+            <p>I confessed. You didn't feel the same. And by all the rules of logic, that should have been the end. The story should have stopped there.</p>
+            <p>But how do you tell the tide not to return to the shore? How do you stop the sun from rising? My heart didn’t understand the word "stop." It only knew your name.</p>
+        </div>
+
+        <div class="text-block">
+            <h1>The Devotion</h1>
+            <p>So I made a choice. A dangerous, beautiful choice.</p>
+            <p>I decided that even if you never loved me back, I would still belong to you. I decided to devote myself to your happiness, even if I wasn't the reason for it. I loved you over everything. Over my pride. Over my fear. Over the logic that screamed at me to move on.</p>
+            <p>I stayed. Not because I was waiting for you to change your mind, but because leaving you felt like leaving myself behind. I was ready to love you from a distance for the rest of my life, just to be near your light. Because even a fraction of your presence was better than a lifetime without it.</p>
+        </div>
+
+        <div class="text-block">
+            <div class="date-stamp">November 24, 2024 • 6:53 PM</div>
+            <h1>The Shift</h1>
+            <p>And then, the universe blinked.</p>
+            <p>I still remember the exact texture of the air that evening. The disbelief. The way my heart hammered against my chest. You, the girl I had placed on a pedestal so high I thought I’d never reach it... you reached down.</p>
+            <p>You accepted me. You saw the devotion I had laid at your feet, and instead of stepping over it, you picked it up. That night, as we talked until the stars faded, I realized I wasn't dreaming.</p>
+            <p>The Goddess I worshipped had decided to love me back. And I have been floating ever since.</p>
+        </div>
+
+        <div class="text-block">
+            <h1>The Gratitude</h1>
+            <p>But before I wish you anything, I need to thank you.</p>
+            <p>Thank you. Not just for loving me, but for letting me love you. Thank you for the moments when I was too much, or not enough, and you stayed anyway. Thank you for your kindness, which is not fragile, but pure gold.</p>
+            <p>You saved me in ways you don't even realize. When the world was loud, you were my quiet. When I forgot who I was, your eyes reminded me. You became the anchor that held me steady when everything else was drifting away.</p>
+            <p>I am grateful for every breath you take, for every smile you give, for simply being <i>you</i>. You are the greatest blessing I have ever received.</p>
+        </div>
+
+        <div class="text-block">
+            <h1>The 18th Year</h1>
+            <p>But today... today is sacred. Today marks 18 years of the world being a brighter place because you are in it.</p>
+            <p>You are stepping into womanhood, into your prime, into the power that has been building inside you since the day you were born. I look at you and I don't just see a pretty face. I see a force of nature. I see a girl who is capable of bringing entire cities to their knees with her smile.</p>
+            <p>Your talent, your elegance, your mind—it is all blooming now. You are not just getting older; you are getting more dangerous, more beautiful, and more powerful.</p>
+            <p>The world is not ready for the woman you are becoming. But I am.</p>
+        </div>
+
+        <div class="text-block">
+            <h1>Your Horizon</h1>
+            <p>As you blow out your candles, I want you to know what I wish for you.</p>
+            <p>I wish for your dreams to be as big as your heart. Whether it is walking the halls of NIFT, walking down the Runway as a supermodel ( the prettiest one ),finding peace in the streets of Vrindavan, or conquering corners of the earth we haven't even seen yet—I hope you claim it all. I hope the world treats you with the same gentleness you give to others.</p>
+            <p>I hope you find success that feels fulfilling and joy that feels effortless. I hope you never lose that spark in your eyes that makes everyone fall in love with you.</p>
+            <p>Go chase the stars, my love. You are already one of them.</p>
+        </div>
+
+        <div class="text-block">
+            <h1>My Vow</h1>
+            <p>And as you step into this bright future, know this:</p>
+            <p>You will never walk alone. I will be there. In every instance. At every point of life. Through the chaos, the calm, the tears, and the victories. I will be the hand you hold when you are scared, and the loudest voice cheering when you win.</p>
+            <p>I am your biggest fan, your safe place, your protector, and your home. I loved you when it was hopeless, and I will love you now that it is everything.</p>
+            <p>You are my beginning. You are my middle. And you will be my always.</p>
+            
+            <div style="margin-top:50px;">
+                <h2 style="font-family: 'Cinzel'; font-size: 2.5rem; color:#D4AF37; margin-bottom: 10px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);">Happiest 18th Birthday, My Love.</h2>
+                <p style="font-size: 1.8rem; font-style: italic;">I Love You.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- MUSIC LOGIC ---
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.querySelector('.music-btn');
+            if(music.paused) {
+                music.play();
+                btn.innerText = '⏸';
+            } else {
+                music.pause();
+                btn.innerText = '🎵';
+            }
+        }
+
+        // AUTO-PLAY FIX
+        window.addEventListener('load', () => {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(() => {
+                document.querySelector('.music-btn').innerText = '🎵';
+            });
+        });
+
+        // --- SCROLL FADE LOGIC ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.3 // Triggers when 30% visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.text-block').forEach(block => {
+            observer.observe(block);
+        });
+    </script>
+</body>
+</html>
