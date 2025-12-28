@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kajal Wrapped 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000; color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND --- */
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(45deg, #1db954, #191414);
+            opacity: 0.2;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -1px; }
+        .user { font-size: 0.9rem; font-weight: bold; color: #b3b3b3; }
+
+        .container {
+            max-width: 600px; margin: 0 auto; padding: 20px; padding-bottom: 120px;
+        }
+
+        /* --- CARDS --- */
+        .card {
+            background: #181818; border-radius: 10px; padding: 30px; margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .card:hover { transform: scale(1.02); }
+
+        .label { color: #b3b3b3; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+        .big-text { font-size: 2.8rem; font-weight: 900; line-height: 1; margin-bottom: 20px; color: #1db954; }
+        
+        .artist-img {
+            width: 100%; height: 350px; object-fit: cover; border-radius: 8px; margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(29, 185, 84, 0.3);
+        }
+
+        .stat-row { display: flex; justify-content: space-between; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
+        .stat-num { font-size: 1.5rem; font-weight: bold; }
+        .stat-desc { color: #b3b3b3; font-size: 0.9rem; margin-top: 5px; line-height: 1.4; }
+
+        /* COLORS */
+        .card-pink { background: linear-gradient(135deg, #800080, #ffc0cb); color: #000; }
+        .card-pink .label { color: rgba(0,0,0,0.6); }
+        .card-pink .big-text { color: #000; font-size: 2.5rem; }
+        
+        .card-blue { background: linear-gradient(135deg, #000046, #1CB5E0); }
+        .card-blue .big-text { color: #fff; }
+        
+        .card-orange { background: linear-gradient(135deg, #b92b27, #1565C0); }
+        .card-orange .big-text { color: #fff; }
+
+        .card-gold { background: linear-gradient(135deg, #FDC830, #F37335); color: #000; }
+        .card-gold .label { color: rgba(0,0,0,0.6); }
+        .card-gold .big-text { color: #000; }
+
+        /* CHARTS */
+        .chart-container { margin-top: 20px; }
+        .bar-group { margin-bottom: 15px; }
+        .bar-label { font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
+        .bar-bg { background: rgba(255,255,255,0.2); height: 20px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 10px; display: flex; align-items: center; padding-left: 10px; font-size: 0.7rem; font-weight: bold; }
+
+        /* SONG ROW */
+        .song-row { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
+        .album-cover { width: 80px; height: 80px; border-radius: 4px; }
+        .song-info { flex: 1; }
+        .song-title { font-weight: bold; font-size: 1.2rem; }
+        .song-artist { color: #b3b3b3; }
+
+        /* MOOD PILLS */
+        .mood-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .mood-pill { 
+            background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 50px; 
+            font-weight: bold; font-size: 0.9rem;
+        }
+
+        /* PLAYER BAR */
+        .player-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: #181818; border-top: 1px solid #282828;
+            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
+            z-index: 100; box-sizing: border-box;
+        }
+        .player-left { display: flex; align-items: center; gap: 15px; }
+        .mini-cover { width: 50px; height: 50px; border-radius: 4px; }
+        .mini-info h4 { margin: 0; font-size: 0.9rem; }
+        .mini-info p { margin: 0; font-size: 0.75rem; color: #b3b3b3; }
+        .play-btn {
+            background: #fff; color: #000; border: none; border-radius: 50%;
+            width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .progress-container { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #333; }
+        .progress-bar { width: 0%; height: 100%; background: #1db954; transition: width 0.1s linear; }
+
+        .fade-in { animation: fadeIn 1s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+
+    <div class="header">
+        <div class="logo">Wrapped <span style="color:#1db954;">2025</span></div>
+        <div class="user">For Kajal</div>
+    </div>
+
+    <div class="container">
+        
+        <div class="card fade-in">
+            <div class="label">Top Artist</div>
+            <div class="big-text">You.</div>
+            <img src="images/spotify-kajal.jpg" class="artist-img">
+            <div class="stat-desc" style="font-size: 1.1rem; color: #fff;">
+                You were Shravan's #1 most viewed person this year. He spent approximately 100% of his time staring at you.
+            </div>
+            <div class="stat-row">
+                <div><div class="stat-num">Top 0.001%</div><div class="stat-desc">Of Prettiest Girls</div></div>
+                <div><div class="stat-num">#1 Fan</div><div class="stat-desc">Shravan</div></div>
+            </div>
+        </div>
+
+        <div class="card fade-in">
+            <div class="label">The Competition</div>
+            <div class="big-text">It's Not Close.</div>
+            <p style="color:#b3b3b3;">They got nothin' on you. Literally.</p>
+            
+            <div class="chart-container">
+                <div class="bar-group">
+                    <div class="bar-label">Kajal</div>
+                    <div class="bar-bg">
+                        <div class="bar-fill" style="width: 100%; background: #1db954; color: #000;">100% PERFECT</div>
+                    </div>
+                </div>
+                <div class="bar-group">
+                    <div class="bar-label">Beautiful girls all over the world</div>
+                    <div class="bar-bg">
+                        <div class="bar-fill" style="width: 5%; background: #333; color: #fff;">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-blue fade-in">
+            <div class="label">Top Podcast</div>
+            <div class="big-text">The Daily Yap</div>
+            <div class="stat-desc" style="color:#ddd; margin-bottom: 20px;">
+                Hosted by <b>Kajal</b>. Featuring special guest: Shravan (who just nods and listens).
+            </div>
+            <div class="stat-row" style="border-top-color: rgba(255,255,255,0.2);">
+                <div><div class="stat-num">∞</div><div class="stat-desc">Episodes Listened</div></div>
+                <div><div class="stat-num">5 Stars</div><div class="stat-desc">Rating</div></div>
+            </div>
+        </div>
+
+        <div class="card fade-in">
+            <div class="label">Minutes Spent Listening to You</div>
+            <div class="big-text">525,600+</div>
+            <div class="stat-desc">
+                That's more than 99% of boyfriends in India. And yet, Shravan's report says: <b>"Still Not Enough."</b>
+            </div>
+        </div>
+
+        <div class="card card-pink fade-in">
+            <div class="label">Top Genre</div>
+            <div class="big-text">Pure Chaos & Cuteness</div>
+            <p style="font-weight: 500; font-size: 1.1rem;">
+                You didn't fit into just one genre. You were a mix of "Sweet Angel," "Drama Queen," and "Professional Headache."
+            </p>
+        </div>
+
+        <div class="card card-gold fade-in">
+            <div class="label">Physical Reaction Data</div>
+            <div class="big-text">System Overload</div>
+            <p style="font-size: 1.1rem; font-weight: 500;">
+                We tracked Shravan's heart rate throughout the year. Here are the triggers:
+            </p>
+            <div style="margin-top: 20px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>Normal Day</span>
+                    <span>70 BPM</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>You text him</span>
+                    <span>120 BPM</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem;">
+                    <span>You Smile</span>
+                    <span>CRITICAL FAILURE 💥</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-orange fade-in">
+            <div class="label">Your Audio Aura</div>
+            <div class="big-text">Magical</div>
+            <p style="color:#eee; margin-bottom: 20px;">
+                Your presence brings main character energy. The top moods you caused in Shravan this year were:
+            </p>
+            <div class="mood-container">
+                <div class="mood-pill">🦋 Butterflies</div>
+                <div class="mood-pill">🥰 Simping</div>
+                <div class="mood-pill">😱 Panic (When you're mad)</div>
+                <div class="mood-pill">❤️ Pure Love</div>
+            </div>
+        </div>
+
+        <div class="card card-pink fade-in">
+            <div class="label">Your Listening Personality</div>
+            <div class="big-text">The Muse</div>
+            <p style="font-weight: 500; font-size: 1.1rem;">
+                When you walk into a room, the music changes. You are the main character, the lyrics, and the melody all at once.
+            </p>
+        </div>
+
+        <div class="card fade-in">
+            <div class="label">Top Song</div>
+            <div class="big-text">Nothing</div>
+            
+            <div class="song-row">
+                <img src="images/cover.jpg" class="album-cover">
+                <div class="song-info">
+                    <div class="song-title">Nothing</div>
+                    <div class="song-artist">Bruno Major</div>
+                </div>
+            </div>
+            <br>
+            <div class="stat-desc" style="font-style: italic; color: #fff; font-size: 1.1rem; line-height: 1.5;">
+                "Dumb conversations, we lose track of time. Have I told you lately I'm grateful you're mine?
+                ...There's nothing like doing nothing with you."
+            </div>
+            <div class="stat-desc" style="margin-top: 15px;">
+                (My favorite thing in the world: Doing nothing, as long as it's with you.)
+            </div>
+        </div>
+
+        <div class="card fade-in" style="background: #1db954; color: #000; text-align: center;">
+            <div class="big-text" style="color:#000; margin-bottom: 10px;">Thank You</div>
+            <p style="font-weight: bold; font-size: 1.2rem;">For being the best part of my year.</p>
+            <p>I can't wait to see what we stream next year.</p>
+        </div>
+
+    </div>
+
+    <div class="player-bar">
+        <div class="progress-container"><div class="progress-bar" id="progress"></div></div>
+
+        <div class="player-left">
+            <img src="images/cover.jpg" class="mini-cover">
+            <div class="mini-info">
+                <h4>Nothing</h4>
+                <p>Bruno Major</p>
+            </div>
+        </div>
+
+        <button class="play-btn" onclick="togglePlay()"><span id="play-icon">▶</span></button>
+    </div>
+
+    <audio id="audio-player" src="images/song.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-icon');
+        const progressBar = document.getElementById('progress');
+        let isPlaying = false;
+
+        function togglePlay() {
+            if (isPlaying) { audio.pause(); playBtn.innerText = "▶"; } 
+            else { audio.play(); playBtn.innerText = "❚❚"; }
+            isPlaying = !isPlaying;
+        }
+
+        audio.ontimeupdate = function() {
+            const percentage = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = percentage + "%";
+        }
+
+        audio.onended = function() {
+            isPlaying = false;
+            playBtn.innerText = "▶";
+            progressBar.style.width = "0%";
+        }
+    </script>
+</body>
+</html>
