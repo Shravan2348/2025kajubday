@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Truth Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fff; margin: 0; padding: 0;
+            color: #202124;
+            overflow-x: hidden;
+        }
+
+        /* --- 1. HOME PAGE STYLES --- */
+        #home-container {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; transition: 0.3s;
+        }
+
+        .logo {
+            font-size: 5rem; font-weight: 700; letter-spacing: -2px;
+            margin-bottom: 30px; user-select: none;
+        }
+        /* Google Colors */
+        .l-blue { color: #4285F4; }
+        .l-red { color: #EA4335; }
+        .l-yellow { color: #FBBC05; }
+        .l-green { color: #34A853; }
+
+        .search-box-wrapper {
+            width: 90%; max-width: 580px; position: relative;
+        }
+
+        .search-bar {
+            width: 100%; padding: 15px 45px 15px 45px;
+            border-radius: 24px; border: 1px solid #dfe1e5;
+            font-size: 1.1rem; outline: none;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            transition: 0.3s; box-sizing: border-box;
+        }
+        .search-bar:hover, .search-bar:focus {
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28), 0 2px 10px rgba(32,33,36,0.1);
+            border-color: transparent;
+        }
+
+        .search-icon-left {
+            position: absolute; left: 15px; top: 15px; color: #9aa0a6; font-size: 1.1rem;
+        }
+
+        .buttons { margin-top: 30px; }
+        .btn {
+            background-color: #f8f9fa; border: 1px solid #f8f9fa; color: #3c4043;
+            padding: 10px 20px; margin: 0 5px; border-radius: 4px; cursor: pointer;
+            font-size: 0.9rem; transition: 0.2s;
+        }
+        .btn:hover { border-color: #dadce0; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+
+        /* --- 2. RESULTS PAGE STYLES (Hidden initially) --- */
+        #results-container {
+            display: none; padding: 20px;
+        }
+
+        /* Top Bar with Mini Search */
+        .top-bar {
+            display: flex; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #ebebeb;
+            margin-bottom: 20px;
+        }
+        .mini-logo { font-size: 1.5rem; font-weight: bold; margin-right: 30px; cursor: pointer; text-decoration: none;}
+        
+        .mini-search-wrapper {
+            position: relative; width: 100%; max-width: 600px;
+        }
+        .mini-search {
+            width: 100%; padding: 10px 20px;
+            border-radius: 24px; border: 1px solid #dfe1e5;
+            font-size: 1rem; box-shadow: 0 1px 6px rgba(32,33,36,0.28); outline: none;
+        }
+
+        /* Grid Layout */
+        .results-grid { display: flex; flex-wrap: wrap; gap: 50px; }
+        .left-col { flex: 1; min-width: 300px; max-width: 600px; }
+        .right-col { width: 350px; }
+
+        .stat-text { color: #70757a; font-size: 0.9rem; margin-bottom: 20px; }
+
+        .did-you-mean {
+            color: #EA4335; font-style: italic; margin-bottom: 30px; font-size: 1.1rem;
+        }
+        .correction { color: #4285F4; font-weight: bold; cursor: pointer; text-decoration: underline; }
+
+        /* RESULT ITEMS */
+        .result-item { margin-bottom: 30px; }
+        
+        .result-url { 
+            color: #202124; font-size: 0.9rem; margin-bottom: 5px; display: flex; align-items: center; 
+        }
+        .result-icon { margin-right: 8px; font-size: 1rem; }
+        
+        .result-title { color: #1a0dab; font-size: 1.35rem; text-decoration: none; cursor: pointer; display: block; }
+        .result-title:hover { text-decoration: underline; }
+        
+        .result-desc { color: #4d5156; font-size: 0.95rem; line-height: 1.6; margin-top: 5px; }
+
+        /* KNOWLEDGE GRAPH (Sidebar) */
+        .knowledge-graph {
+            border: 1px solid #ebebeb; border-radius: 8px; padding: 20px;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.1);
+        }
+        .kg-images {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 5px; margin-bottom: 15px; height: 200px;
+        }
+        .kg-img {
+            width: 100%; height: 100%; object-fit: cover; background: #eee; border-radius: 4px;
+        }
+        .kg-title { font-size: 1.8rem; font-weight: normal; margin: 0; }
+        .kg-subtitle { color: #70757a; font-size: 0.9rem; margin-bottom: 15px; }
+        .kg-desc { font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; border-bottom: 1px solid #ebebeb; padding-bottom: 15px;}
+        
+        .kg-row { margin-bottom: 8px; font-size: 0.9rem; }
+        .kg-label { font-weight: bold; color: #202124; }
+
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media(max-width: 800px) {
+            .results-grid { flex-direction: column-reverse; } 
+            .right-col { width: 100%; }
+            .logo { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="home-container">
+        <div class="logo">
+            <span class="l-blue">T</span><span class="l-red">h</span><span class="l-yellow">e</span><span class="l-blue">T</span><span class="l-green">r</span><span class="l-red">u</span><span class="l-yellow">t</span><span class="l-blue">h</span>
+        </div>
+        
+        <div class="search-box-wrapper">
+            <span class="search-icon-left">🔍</span>
+            <input type="text" class="search-bar" id="main-input" placeholder="Search the web..." autocomplete="off">
+        </div>
+
+        <div class="buttons">
+            <button class="btn" onclick="performSearch()">Search</button>
+            <button class="btn" onclick="performSearch()">I'm Feeling Lucky</button>
+        </div>
+    </div>
+
+    <div id="results-container">
+        <div class="top-bar">
+            <a href="#" onclick="location.reload()" class="mini-logo">
+                <span class="l-blue">T</span><span class="l-red">h</span><span class="l-yellow">e</span><span class="l-blue">T</span><span class="l-green">r</span><span class="l-red">u</span><span class="l-yellow">t</span><span class="l-blue">h</span>
+            </a>
+            <div class="mini-search-wrapper">
+                <input type="text" class="mini-search" id="result-input" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="results-grid">
+            <div class="left-col fade-in" id="results-area">
+                <div class="stat-text">About 8,000,000,000 results (0.0001 seconds)</div>
+                
+                <div class="did-you-mean">
+                    Did you mean: <span class="correction" id="correction-text">Shravan's entire world?</span>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-url"><span class="result-icon">📖</span> dictionary.com › definition › perfection</div>
+                    <a class="result-title">Definition of Perfection (Noun)</a>
+                    <div class="result-desc">
+                        1. A quality, trait, or feature of the highest degree of excellence.<br>
+                        2. <b>See also: Her Face, Her Smile.</b> Scientists confirm she is the only known example of 100% flawlessness.
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-url"><span class="result-icon">🚀</span> nasa.gov › universe › stars</div>
+                    <a class="result-title">NASA Confirms Object Brighter Than The Sun</a>
+                    <div class="result-desc">
+                        Astronomers have confirmed that <b>Kajal's smile</b> emits more light energy than the sun itself. Shravan is reportedly blinded by love daily.
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-url"><span class="result-icon">📍</span> http://maps.google.com › location › heart</div>
+                    <a class="result-title">Location Found: Center of Shravan's Universe</a>
+                    <div class="result-desc">
+                        <b>Destination:</b> Kajal.<br>
+                        <b>Traffic:</b> None. Clear path ahead.<br>
+                        <b>Status:</b> You have arrived at your destination.
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-url"><span class="result-icon">🌐</span> wikipedia.org › wiki › Goddess</div>
+                    <a class="result-title">List of Deities - Kajal</a>
+                    <div class="result-desc">
+                        Known for turning ordinary days into magical ones just by existing. Primary worshipper: Shravan.
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-url"><span class="result-icon">📰</span> time.com › person-of-the-year</div>
+                    <a class="result-title">TIME Person of the Year: Kajal</a>
+                    <div class="result-desc">
+                        Breaking records for elegance, style, and kindness. Critics agree: "She is the main character."
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-url"><span class="result-icon">🎵</span> http://spotify.com › charts › viral</div>
+                    <a class="result-title">Global Top Hit: "Kajal's Laughter"</a>
+                    <div class="result-desc">
+                        The most addictive sound in the world. Listened to on repeat by Shravan. Beats Per Minute: Matches his heart rate.
+                    </div>
+                </div>
+                
+                 <div class="result-item">
+                    <div class="result-url"><span class="result-icon">🛒</span> amazon.com › best-sellers › gifts</div>
+                    <a class="result-title">Best Gift of 2025: Kajal</a>
+                    <div class="result-desc">
+                        <b>Rating:</b> ⭐⭐⭐⭐⭐ (5/5)<br>
+                        "Changed my life," says Shravan. "Best thing that ever happened to me." Currently Unavailable for anyone else.
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-col fade-in">
+                <div class="knowledge-graph">
+                    <div class="kg-images">
+                        <img src="pic1.jpg" class="kg-img" style="grid-row: span 2;"> 
+                        <img src="pic2.jpg" class="kg-img">
+                        <img src="pic3.jpg" class="kg-img">
+                    </div>
+                    
+                    <h1 class="kg-title">Kajal</h1>
+                    <div class="kg-subtitle">Owner of Shravan's Heart</div>
+                    <div class="kg-desc">
+                        An 18-year-old phenomenon causing global warming due to extreme hotness. Known for her style, grace, and ability to win every argument.
+                    </div>
+
+                    <div class="kg-row"><span class="kg-label">Born:</span> Dec 29, 2007 (Age 18)</div>
+                    <div class="kg-row"><span class="kg-label">Partner:</span> Shravan (The Lucky One)</div>
+                    <div class="kg-row"><span class="kg-label">Net Worth:</span> Priceless</div>
+                    <div class="kg-row"><span class="kg-label">Superpower:</span> Existing</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // INPUTS
+        const mainInput = document.getElementById('main-input');
+        const resultInput = document.getElementById('result-input');
+        const correctionText = document.getElementById('correction-text');
+        const resultsArea = document.getElementById('results-area');
+
+        // RANDOM OPTIONS FOR "DID YOU MEAN"
+        const suggestions = [
+            "Shravan's entire world?",
+            "The prettiest girl in existence?",
+            "The reason the sun shines?",
+            "Your future wife?",
+            "The definition of beauty?",
+            "The Queen of 2025?",
+            "Shravan's obsession?"
+        ];
+
+        // 1. MAIN PAGE ENTER
+        mainInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch(mainInput.value);
+            }
+        });
+
+        // 2. RESULTS PAGE ENTER (RE-SEARCH)
+        resultInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch(resultInput.value);
+            }
+        });
+
+        function performSearch(queryText) {
+            // Default text if empty
+            if (!queryText || queryText.trim() === "") queryText = "The Truth";
+
+            // 1. Switch Views
+            document.getElementById('home-container').style.display = 'none';
+            document.getElementById('results-container').style.display = 'block';
+
+            // 2. Update Input Bar
+            resultInput.value = queryText;
+
+            // 3. Randomize "Did you mean"
+            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+            correctionText.innerText = randomSuggestion;
+
+            // 4. Reset Animation (So it fades in again)
+            resultsArea.classList.remove('fade-in');
+            void resultsArea.offsetWidth; // Trigger reflow
+            resultsArea.classList.add('fade-in');
+
+            // 5. Scroll Top
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
