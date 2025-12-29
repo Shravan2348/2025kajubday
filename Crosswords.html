@@ -83,9 +83,26 @@
             transition: 0.3s;
         }
         .close-btn:hover { background: white; color: black; }
+
+        /* MUSIC BUTTON */
+        .music-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            background: rgba(212, 175, 55, 0.2); border: 1px solid #D4AF37;
+            color: #D4AF37; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 50; transition: 0.3s;
+        }
+        .music-btn:hover { background: #D4AF37; color: #000; }
     </style>
 </head>
 <body>
+
+    <audio id="bg-music" loop>
+        <source src="images/crosswordsong.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+
 
     <div id="intro-screen">
         <h1>The Archive Quiz</h1>
@@ -118,50 +135,85 @@
         </div>
 
         <div class="puzzle-row">
-            <div class="clue"><strong>4.</strong> The boy who built this website (7)</div>
-            <div class="tiles-container" data-answer="SHRAVAN">
-                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
-            </div>
-        </div>
-
-        <div class="puzzle-row">
-            <div class="clue"><strong>5.</strong> The magic number we are celebrating (8)</div>
+            <div class="clue"><strong>4.</strong> The magic number we are celebrating (8)</div>
             <div class="tiles-container" data-answer="EIGHTEEN">
                 <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
             </div>
         </div>
 
         <div class="puzzle-row">
-            <div class="clue"><strong>6.</strong> Her Zodiac Sign (9)</div>
+            <div class="clue"><strong>5.</strong> Her Zodiac Sign (9)</div>
             <div class="tiles-container" data-answer="CAPRICORN">
                 <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
             </div>
         </div>
 
         <div class="puzzle-row">
-            <div class="clue"><strong>7.</strong> The month an angel was born (8)</div>
+            <div class="clue"><strong>6.</strong> The month an angel was born (8)</div>
             <div class="tiles-container" data-answer="DECEMBER">
                 <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
             </div>
         </div>
 
         <div class="puzzle-row">
-            <div class="clue"><strong>8.</strong> Her favorite hobby (Besides looking cute) (5)</div>
+            <div class="clue"><strong>7.</strong> Her favorite hobby (Besides looking cute) (5)</div>
             <div class="tiles-container" data-answer="SLEEP">
                 <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
             </div>
         </div>
 
         <div class="puzzle-row">
-            <div class="clue"><strong>9.</strong> One word to describe her (4)</div>
+            <div class="clue"><strong>8.</strong> One word to describe her *starts with D* (4)</div>
             <div class="tiles-container" data-answer="DIVA">
                 <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
             </div>
         </div>
 
         <div class="puzzle-row">
-            <div class="clue"><strong>10.</strong> Her relationship status (5)</div>
-            <div class="tiles-container" data-answer="TAKEN">
+            <div class="clue"><strong>9.</strong> Her favorite K-pop Idol (5)</div>
+            <div class="tiles-container" data-answer="JIMIN">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>10.</strong> Her favorite K-drama (9)</div>
+            <div class="tiles-container" data-answer="PENTHOUSE">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>11.</strong> Her favorite TV Series (14)</div>
+            <div class="tiles-container" data-answer="STRANGERTHINGS">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>12.</strong> Her pet rabbit's name (5)</div>
+            <div class="tiles-container" data-answer="KUTTU">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>13.</strong> Her favorite beverage (6)</div>
+            <div class="tiles-container" data-answer="COFFEE">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>14.</strong> Who is legally the "cuter" one? (5)</div>
+            <div class="tiles-container" data-answer="KAJAL">
+                <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
+            </div>
+        </div>
+
+        <div class="puzzle-row">
+            <div class="clue"><strong>15.</strong> Where does she want to get married? *hint: sand* (5)</div>
+            <div class="tiles-container" data-answer="BEACH">
                 <input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1"><input class="tile" maxlength="1">
             </div>
         </div>
@@ -197,6 +249,18 @@
         const resultsCol = collection(db, "crossword_results");
 
         let currentPlayer = "";
+        const bgMusic = document.getElementById('bg-music');
+
+        // MUSIC TOGGLE FUNCTION
+        window.toggleMusic = () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                document.querySelector('.music-btn').innerText = "🔊";
+            } else {
+                bgMusic.pause();
+                document.querySelector('.music-btn').innerText = "🔇";
+            }
+        };
 
         // AUTO-TAB LOGIC
         const allTiles = document.querySelectorAll('.tile');
@@ -218,13 +282,18 @@
             const name = input.value.trim();
             if(!name) { alert("Please enter your name!"); return; }
             currentPlayer = name;
+            
+            // START MUSIC AND SHOW GAME
+            bgMusic.play().catch(e => console.log("Audio play failed (user interaction needed first)"));
+            document.querySelector('.music-btn').innerText = "🔊";
+            
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('game-board').style.display = 'flex';
         };
 
         window.submitGame = async () => {
             let score = 0;
-            const total = 10;
+            const total = 15;
             const rows = document.querySelectorAll('.puzzle-row');
             const btn = document.getElementById('submitBtn');
             
@@ -240,7 +309,6 @@
                 inputs.forEach(input => playerAnswer += input.value.toUpperCase());
 
                 // SAVE INPUT (KEY: Q1_VRINDAVAN, VALUE: USER_INPUT)
-                // We use index+1 so keys are Q1, Q2, etc.
                 userAnswers[`Q${index+1}_${correctAnswer}`] = playerAnswer || "(BLANK)";
 
                 if(playerAnswer === correctAnswer) {
@@ -248,11 +316,6 @@
                     row.classList.add('correct');
                 } else {
                     row.classList.add('wrong');
-                    // Reveal Answer Logic (Optional)
-                    inputs.forEach((input, i) => {
-                        input.value = correctAnswer[i];
-                        input.style.color = '#f44336';
-                    });
                 }
             });
 
@@ -264,8 +327,8 @@
             modal.style.display = 'flex';
             title.innerText = `SCORE: ${score} / ${total}`;
             
-            if(score === 10) msg.innerText = "PERFECT! You are a true friend.";
-            else if (score >= 7) msg.innerText = "Solid effort. You know her well!";
+            if(score === 15) msg.innerText = "PERFECT! You are a true friend.";
+            else if (score >= 10) msg.innerText = "Solid effort. You know her well!";
             else msg.innerText = "Oof. Do you even know her? 😂";
 
             // Save to DB
@@ -277,7 +340,7 @@
                     name: currentPlayer,
                     score: score,
                     totalQuestions: total,
-                    answers: userAnswers, // THIS SENDS THE RAW INPUTS
+                    answers: userAnswers,
                     timestamp: serverTimestamp()
                 });
                 btn.innerText = "SAVED";
