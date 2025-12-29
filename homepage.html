@@ -1,234 +1,306 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>The Tribute — Home</title>
-<style>
-  :root{
-    --bg:#050505;
-    --gold:#D4AF37;
-    --crimson:#7a1f2b;
-    --muted:rgba(212,175,55,0.12);
-    --glass: rgba(255,255,255,0.03);
-    --card-radius:14px;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    min-height:100vh;
-    font-family: Inter, Georgia, serif;
-    background:linear-gradient(180deg,#050505 0%, #070707 100%);
-    color:var(--gold);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:48px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kajal's 18th Universe</title>
+    <style>
+        /* Import a more elegant serif for the signature and a clean sans for the heading */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:italic@0,700&family=Inter:wght@200;400&display=swap');
 
-  .wrap{
-    width:100%;
-    max-width:1200px;
-  }
+        :root {
+            --bg-deep: #020406;
+            --bg-glow: #080a10;
+            --heart-red: #ff3333;
+            --signature-gold: #f0e68c;
+            --text-dim: rgba(255, 255, 255, 0.4);
+        }
 
-  header{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin-bottom:28px;
-  }
-  .logo{
-    width:64px;
-    height:64px;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--muted),transparent);
-    display:grid;
-    place-items:center;
-    font-weight:700;
-    color:var(--gold);
-    border:1px solid rgba(212,175,55,0.14);
-  }
-  h1{
-    margin:0;
-    font-size:20px;
-    letter-spacing:0.6px;
-  }
-  p.lead{
-    margin:6px 0 0;
-    color:rgba(212,175,55,0.9);
-    font-size:13px;
-  }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at center, var(--bg-glow) 0%, var(--bg-deep) 100%);
+            font-family: 'Inter', sans-serif;
+        }
 
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    margin-top:18px;
-  }
+        /* Intro Overlay */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 4, 6, 0.98);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: #ffffff;
+            transition: opacity 1.5s ease;
+        }
 
-  .card{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(212,175,55,0.06);
-    border-radius:var(--card-radius);
-    padding:18px;
-    min-height:120px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    transition:transform .28s ease, box-shadow .28s ease;
-    text-decoration:none;
-    color:var(--gold);
-  }
-  .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-    border-color:var(--gold);
-  }
-  .card .title{
-    font-weight:700;
-    font-size:16px;
-  }
-  .card .plaque{
-    color:rgba(212,175,55,0.9);
-    font-size:13px;
-    margin-top:8px;
-  }
-  .card .cta{
-    margin-top:12px;
-    align-self:flex-end;
-    background:transparent;
-    border:1px solid rgba(212,175,55,0.08);
-    padding:8px 12px;
-    border-radius:10px;
-    color:var(--gold);
-    font-size:13px;
-    text-decoration:none;
-  }
-  .card .cta:hover{
-    background:var(--gold);
-    color:#000;
-    border-color:transparent;
-  }
+        #intro-content {
+            max-width: 700px;
+            text-align: center;
+            padding: 40px;
+            animation: fadeIn 2.5s ease;
+        }
 
-  /* final center */
-  .center{
-    grid-column:1/-1;
-    display:flex;
-    justify-content:center;
-    margin-top:6px;
-  }
-  .final{
-    padding:14px 26px;
-    border-radius:14px;
-    border:2px solid var(--crimson);
-    color:var(--crimson);
-    background:#000;
-    text-decoration:none;
-    font-weight:700;
-  }
-  .final:hover{
-    background:var(--crimson);
-    color:#000;
-  }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); filter: blur(5px); } 
+            to { opacity: 1; transform: translateY(0); filter: blur(0); } 
+        }
 
-  @media (max-width:980px){
-    .grid{grid-template-columns:repeat(2,1fr)}
-  }
-  @media (max-width:620px){
-    body{padding:18px}
-    .grid{grid-template-columns:1fr}
-    header{flex-direction:column;align-items:flex-start}
-    .logo{width:56px;height:56px}
-  }
-</style>
+        h1.birthday-wish {
+            font-family: 'Inter', sans-serif;
+            font-weight: 200;
+            letter-spacing: 12px; /* Cinematic spacing */
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            line-height: 1.4;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .guide-text {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .meta-text {
+            font-family: 'Courier New', monospace;
+            font-style: italic;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            color: #6a737d;
+            margin-bottom: 35px;
+            font-size: 0.85rem;
+        }
+
+        .signature {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--signature-gold);
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            display: block;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        button#enter-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            padding: 16px 50px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        button#enter-btn:hover {
+            border-color: var(--heart-red);
+            background: rgba(255, 51, 51, 0.05);
+            letter-spacing: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        #ui-layer {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+        }
+
+        .audio-toggle {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+        }
+
+        canvas { display: block; }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">SK</div>
-      <div>
-        <h1>The Tribute — Grand Index</h1>
-        <p class="lead">Click a portal to enter — all pages are in this repository.</p>
-      </div>
-    </header>
 
-    <main class="grid">
-      <a class="card" href="vending.html">
-        <div>
-          <div class="title">The Automatic Muse</div>
-          <div class="plaque">A virtual vending machine of truths.</div>
+    <div id="intro-overlay">
+        <div id="intro-content">
+            <h1 class="birthday-wish">HAPPIEST 18TH BIRTHDAY TO OUR BELOVED KAJAL &lt;3</h1>
+            
+            <p class="guide-text">
+                Each star is a webpage that tells a story of its own &lt;3 <br>
+                Start wherever you like.
+            </p>
+
+            <p class="meta-text">
+                This space is a digital archive of things felt and remembered. 
+                What you see is a map of a single heart, scattered into fragments across this sky. 
+                Each star is a threshold—a page where a moment lives.
+            </p>
+
+            <span class="signature">made with love and obsession by shravan &lt;3</span>
+            
+            <button id="enter-btn">ENTER THE SKY</button>
         </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+    </div>
 
-      <a class="card" href="search.html">
-        <div>
-          <div class="title">The Absolute Truth</div>
-          <div class="plaque">A rigged search engine that only returns her.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+    <div id="ui-layer">
+        <button class="audio-toggle" id="musicBtn">ENVIRONMENT AUDIO: OFF</button>
+        <audio id="bgMusic" loop>
+            <source src="background.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
-      <a class="card" href="spotify.html">
-        <div>
-          <div class="title">The Infinite Melody</div>
-          <div class="plaque">Spotify-wrapped parody celebrating her voice.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+    <canvas id="constellationCanvas"></canvas>
 
-      <a class="card" href="netflix.html">
-        <div>
-          <div class="title">The Living Cinema</div>
-          <div class="plaque">A Netflix-like UI of her life and photos.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+    <script>
+        const canvas = document.getElementById('constellationCanvas');
+        const ctx = canvas.getContext('2d');
+        const intro = document.getElementById('intro-overlay');
+        const enterBtn = document.getElementById('enter-btn');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
 
-      <a class="card" href="letters.html">
-        <div>
-          <div class="title">The Post of Devotion</div>
-          <div class="plaque">A digital mailbox for letters.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+        let width, height;
+        let mouse = { x: -100, y: -100 };
+        let activeNode = null;
+        let frame = 0;
+        const backgroundStars = [];
 
-      <a class="card" href="candleCake.html">
-        <div>
-          <div class="title">The Eternal Flame</div>
-          <div class="plaque">Light candles and celebrate her.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+        const nodes = [
+            { id: 'center', x: 50, y: 50, label: 'The Architect’s Heart', url: 'SKmsg.html', size: 8, color: '#ff3333' },
+            { id: 1, x: 32, y: 28, label: 'Dispenser of Joy', url: 'vending.html', size: 3 },
+            { id: 2, x: 72, y: 32, label: 'The Truth Browser', url: 'search.html', size: 3 },
+            { id: 3, x: 82, y: 58, label: 'Kajal Wrapped 2025', url: 'spotify.html', size: 3 },
+            { id: 4, x: 68, y: 78, label: 'KAJAL – Now Streaming', url: 'netflix.html', size: 3 },
+            { id: 5, x: 28, y: 72, label: 'Write for Her 18th <3', url: 'letters.html', size: 3 },
+            { id: 6, x: 18, y: 52, label: 'Light a Candle', url: 'candleCake.html', size: 3 },
+            { id: 7, x: 48, y: 18, label: 'The Daily Prophet', url: 'News.html', size: 3 },
+            { id: 8, x: 55, y: 82, label: 'Do You Know Her?', url: 'Crosswords.html', size: 3 },
+            { id: 9, x: 12, y: 12, label: 'The Ledger of Love', url: 'LoveReceipt.html', size: 3 }
+        ];
 
-      <a class="card" href="News.html">
-        <div>
-          <div class="title">The Daily Prophet</div>
-          <div class="plaque">Magical newspaper with stories & video.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+        const connections = [
+            ['center', 1], ['center', 2], ['center', 3], ['center', 4],
+            ['center', 5], ['center', 6], [1, 7], [2, 3], [4, 8], [6, 9]
+        ];
 
-      <a class="card" href="Crosswords.html">
-        <div>
-          <div class="title">The Cryptic Trial</div>
-          <div class="plaque">Crossword puzzle — logs to Firebase.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+        function initBackground() {
+            backgroundStars.length = 0;
+            for(let i = 0; i < 200; i++) {
+                backgroundStars.push({
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    opacity: Math.random(),
+                    size: Math.random() * 1.5,
+                    speed: 0.01 + Math.random() * 0.02 
+                });
+            }
+        }
 
-      <a class="card" href="LoveReceipt.html">
-        <div>
-          <div class="title">The Ledger of Love</div>
-          <div class="plaque">A receipt listing "purchased" memories.</div>
-        </div>
-        <div><span class="cta">Open</span></div>
-      </a>
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
 
-      <div class="center">
-        <a class="final" href="SKmsg.html">The Architect's Heart — Finale</a>
-      </div>
-    </main>
-  </div>
+        function getPos(node) {
+            return { x: (node.x / 100) * width, y: (node.y / 100) * height };
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            frame++;
+            
+            backgroundStars.forEach(s => {
+                s.y -= s.speed; 
+                if (s.y < 0) s.y = 100;
+                const twinkle = (Math.sin(frame * 0.02 + s.x) + 1) / 2;
+                ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity * twinkle * 0.6})`;
+                ctx.beginPath();
+                ctx.arc((s.x/100)*width, (s.y/100)*height, s.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+            ctx.lineWidth = 1;
+            connections.forEach(conn => {
+                const start = getPos(nodes.find(n => n.id === conn[0]));
+                const end = getPos(nodes.find(n => n.id === conn[1]));
+                ctx.beginPath();
+                ctx.moveTo(start.x, start.y);
+                ctx.lineTo(end.x, end.y);
+                ctx.stroke();
+            });
+
+            activeNode = null;
+            nodes.forEach(node => {
+                const pos = getPos(node);
+                const dist = Math.hypot(mouse.x - pos.x, mouse.y - pos.y);
+                const isHovered = dist < 25;
+                if (isHovered) activeNode = node;
+
+                let pulse = (node.id === 'center') ? Math.sin(frame * 0.05) * 3 : 0;
+                const nodeSize = (isHovered ? node.size + 3 : node.size) + pulse;
+                const color = node.color || 'white';
+
+                ctx.shadowBlur = isHovered ? 20 : (node.id === 'center' ? 15 + pulse : 0);
+                ctx.shadowColor = color;
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, nodeSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.shadowBlur = 0;
+                ctx.font = isHovered ? "bold 11px 'Courier New'" : "10px 'Courier New'";
+                ctx.fillStyle = isHovered ? '#ffffff' : (node.id === 'center' ? 'rgba(255, 51, 51, 0.7)' : 'rgba(255, 255, 255, 0.3)');
+                ctx.textAlign = 'center';
+                ctx.fillText(node.label.toUpperCase(), pos.x, pos.y + 30);
+            });
+            
+            requestAnimationFrame(draw);
+        }
+
+        enterBtn.addEventListener('click', () => {
+            intro.style.opacity = '0';
+            setTimeout(() => intro.style.display = 'none', 1500);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            const hovered = nodes.some(node => {
+                const pos = getPos(node);
+                return Math.hypot(e.clientX - pos.x, e.clientY - pos.y) < 25;
+            });
+            canvas.style.cursor = hovered ? 'pointer' : 'default';
+        });
+
+        canvas.addEventListener('click', () => { if (activeNode) window.location.href = activeNode.url; });
+        musicBtn.addEventListener('click', () => {
+            if (bgMusic.paused) { bgMusic.play(); musicBtn.textContent = "ENVIRONMENT AUDIO: ON"; }
+            else { bgMusic.pause(); musicBtn.textContent = "ENVIRONMENT AUDIO: OFF"; }
+        });
+
+        window.addEventListener('resize', () => { resize(); initBackground(); });
+        resize();
+        initBackground();
+        draw();
+    </script>
 </body>
 </html>
