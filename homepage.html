@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kajal's 18th Universe</title>
     <style>
-        /* Import a more elegant serif for the signature and a clean sans for the heading */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:italic@0,700&family=Inter:wght@200;400&display=swap');
 
         :root {
@@ -24,28 +23,24 @@
             overflow: hidden;
             background: radial-gradient(circle at center, var(--bg-glow) 0%, var(--bg-deep) 100%);
             font-family: 'Inter', sans-serif;
+            touch-action: none; /* Prevents accidental zooming while clicking stars */
         }
 
-        /* Intro Overlay */
         #intro-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(2, 4, 6, 0.98);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            color: #ffffff;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; color: #ffffff;
             transition: opacity 1.5s ease;
         }
 
         #intro-content {
-            max-width: 700px;
+            max-width: 90%;
+            width: 600px;
             text-align: center;
-            padding: 40px;
+            padding: 20px;
             animation: fadeIn 2.5s ease;
         }
 
@@ -55,85 +50,37 @@
         }
 
         h1.birthday-wish {
-            font-family: 'Inter', sans-serif;
             font-weight: 200;
-            letter-spacing: 12px; /* Cinematic spacing */
+            letter-spacing: 6px;
             color: #ffffff;
             margin-bottom: 20px;
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             line-height: 1.4;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        .guide-text {
-            font-size: 1rem;
-            letter-spacing: 1px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 300;
+        @media (min-width: 768px) {
+            h1.birthday-wish { font-size: 1.6rem; letter-spacing: 12px; }
         }
 
-        .meta-text {
-            font-family: 'Courier New', monospace;
-            font-style: italic;
-            line-height: 1.8;
-            letter-spacing: 1px;
-            color: #6a737d;
-            margin-bottom: 35px;
-            font-size: 0.85rem;
-        }
-
-        .signature {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--signature-gold);
-            font-size: 1.1rem;
-            margin-bottom: 50px;
-            display: block;
-            opacity: 0.9;
-            letter-spacing: 0.5px;
-        }
+        .guide-text { font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 25px; color: rgba(255, 255, 255, 0.9); }
+        .meta-text { font-family: 'Courier New', monospace; font-style: italic; line-height: 1.6; color: #6a737d; margin-bottom: 30px; font-size: 0.75rem; }
+        .signature { font-family: 'Playfair Display', serif; font-style: italic; color: var(--signature-gold); font-size: 1rem; margin-bottom: 40px; display: block; }
 
         button#enter-btn {
             background: transparent;
             border: 1px solid rgba(255,255,255,0.15);
             color: white;
-            padding: 16px 50px;
+            padding: 14px 40px;
             cursor: pointer;
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: all 0.4s;
         }
 
-        button#enter-btn:hover {
-            border-color: var(--heart-red);
-            background: rgba(255, 51, 51, 0.05);
-            letter-spacing: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        #ui-layer {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 100;
-        }
-
-        .audio-toggle {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-family: 'Courier New', monospace;
-        }
-
+        #ui-layer { position: fixed; bottom: 20px; left: 20px; z-index: 100; }
+        .audio-toggle { background: none; border: none; color: var(--text-dim); font-size: 0.6rem; letter-spacing: 2px; font-family: 'Courier New', monospace; }
         canvas { display: block; }
     </style>
 </head>
@@ -142,45 +89,25 @@
     <div id="intro-overlay">
         <div id="intro-content">
             <h1 class="birthday-wish">HAPPIEST 18TH BIRTHDAY TO OUR BELOVED KAJAL &lt;3</h1>
-            
-            <p class="guide-text">
-                Each star is a webpage that tells a story of its own &lt;3 <br>
-                Start wherever you like.
-            </p>
-
-            <p class="meta-text">
-                This space is a digital archive of things felt and remembered. 
-                What you see is a map of a single heart, scattered into fragments across this sky. 
-                Each star is a threshold—a page where a moment lives.
-            </p>
-
+            <p class="guide-text">Each star is a webpage that tells a story of its own &lt;3<br>Start wherever you like.</p>
+            <p class="meta-text">This space is a digital archive of fragments scattered across the sky.</p>
             <span class="signature">made with love and obsession by shravan &lt;3</span>
-            
             <button id="enter-btn">ENTER THE SKY</button>
         </div>
     </div>
 
-    <div id="ui-layer">
-        <button class="audio-toggle" id="musicBtn">ENVIRONMENT AUDIO: OFF</button>
-        <audio id="bgMusic" loop>
-            <source src="homepage.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
+    <div id="ui-layer"><button class="audio-toggle" id="musicBtn">AUDIO: OFF</button></div>
+    <audio id="bgMusic" loop><source src="background.mp3" type="audio/mpeg"></audio>
     <canvas id="constellationCanvas"></canvas>
 
     <script>
         const canvas = document.getElementById('constellationCanvas');
         const ctx = canvas.getContext('2d');
         const intro = document.getElementById('intro-overlay');
-        const enterBtn = document.getElementById('enter-btn');
-        const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
 
-        let width, height;
-        let mouse = { x: -100, y: -100 };
-        let activeNode = null;
-        let frame = 0;
+        let width, height, frame = 0;
+        let mouse = { x: -1000, y: -1000 };
         const backgroundStars = [];
 
         const nodes = [
@@ -196,31 +123,31 @@
             { id: 9, x: 12, y: 12, label: 'The Ledger of Love', url: 'LoveReceipt.html', size: 3 }
         ];
 
-        const connections = [
-            ['center', 1], ['center', 2], ['center', 3], ['center', 4],
-            ['center', 5], ['center', 6], [1, 7], [2, 3], [4, 8], [6, 9]
-        ];
+        const connections = [['center', 1], ['center', 2], ['center', 3], ['center', 4], ['center', 5], ['center', 6], [1, 7], [2, 3], [4, 8], [6, 9]];
 
         function initBackground() {
             backgroundStars.length = 0;
-            for(let i = 0; i < 200; i++) {
-                backgroundStars.push({
-                    x: Math.random() * 100,
-                    y: Math.random() * 100,
-                    opacity: Math.random(),
-                    size: Math.random() * 1.5,
-                    speed: 0.01 + Math.random() * 0.02 
-                });
-            }
+            for(let i = 0; i < 150; i++) backgroundStars.push({ x: Math.random() * 100, y: Math.random() * 100, opacity: Math.random(), size: Math.random() * 1.5, speed: 0.01 + Math.random() * 0.02 });
         }
 
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
+            initBackground();
         }
 
-        function getPos(node) {
-            return { x: (node.x / 100) * width, y: (node.y / 100) * height };
+        function getPos(node) { return { x: (node.x / 100) * width, y: (node.y / 100) * height }; }
+
+        function checkClick(clientX, clientY) {
+            // Find which node was actually clicked at the moment of the event
+            for (let node of nodes) {
+                const pos = getPos(node);
+                const dist = Math.hypot(clientX - pos.x, clientY - pos.y);
+                if (dist < 35) { // Larger hit area for fingers
+                    window.location.href = node.url;
+                    return;
+                }
+            }
         }
 
         function draw() {
@@ -228,33 +155,22 @@
             frame++;
             
             backgroundStars.forEach(s => {
-                s.y -= s.speed; 
-                if (s.y < 0) s.y = 100;
+                s.y -= s.speed; if (s.y < 0) s.y = 100;
                 const twinkle = (Math.sin(frame * 0.02 + s.x) + 1) / 2;
                 ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity * twinkle * 0.6})`;
-                ctx.beginPath();
-                ctx.arc((s.x/100)*width, (s.y/100)*height, s.size, 0, Math.PI*2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc((s.x/100)*width, (s.y/100)*height, s.size, 0, Math.PI*2); ctx.fill();
             });
 
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
-            ctx.lineWidth = 1;
             connections.forEach(conn => {
-                const start = getPos(nodes.find(n => n.id === conn[0]));
-                const end = getPos(nodes.find(n => n.id === conn[1]));
-                ctx.beginPath();
-                ctx.moveTo(start.x, start.y);
-                ctx.lineTo(end.x, end.y);
-                ctx.stroke();
+                const start = getPos(nodes.find(n => n.id === conn[0])), end = getPos(nodes.find(n => n.id === conn[1]));
+                ctx.beginPath(); ctx.moveTo(start.x, start.y); ctx.lineTo(end.x, end.y); ctx.stroke();
             });
 
-            activeNode = null;
             nodes.forEach(node => {
                 const pos = getPos(node);
                 const dist = Math.hypot(mouse.x - pos.x, mouse.y - pos.y);
                 const isHovered = dist < 25;
-                if (isHovered) activeNode = node;
-
                 let pulse = (node.id === 'center') ? Math.sin(frame * 0.05) * 3 : 0;
                 const nodeSize = (isHovered ? node.size + 3 : node.size) + pulse;
                 const color = node.color || 'white';
@@ -262,9 +178,7 @@
                 ctx.shadowBlur = isHovered ? 20 : (node.id === 'center' ? 15 + pulse : 0);
                 ctx.shadowColor = color;
                 ctx.fillStyle = color;
-                ctx.beginPath();
-                ctx.arc(pos.x, pos.y, nodeSize, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(pos.x, pos.y, nodeSize, 0, Math.PI * 2); ctx.fill();
 
                 ctx.shadowBlur = 0;
                 ctx.font = isHovered ? "bold 11px 'Courier New'" : "10px 'Courier New'";
@@ -272,36 +186,36 @@
                 ctx.textAlign = 'center';
                 ctx.fillText(node.label.toUpperCase(), pos.x, pos.y + 30);
             });
-            
             requestAnimationFrame(draw);
         }
 
-        enterBtn.addEventListener('click', () => {
+        // Corrected Event Listeners
+        canvas.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        
+        // Universal Click Handler (Fixes the "Previous Star" bug)
+        canvas.addEventListener('click', (e) => {
+            checkClick(e.clientX, e.clientY);
+        });
+
+        // Touch Support
+        canvas.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            checkClick(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        document.getElementById('enter-btn').addEventListener('click', () => {
             intro.style.opacity = '0';
             setTimeout(() => intro.style.display = 'none', 1500);
         });
 
-        canvas.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            const hovered = nodes.some(node => {
-                const pos = getPos(node);
-                return Math.hypot(e.clientX - pos.x, e.clientY - pos.y) < 25;
-            });
-            canvas.style.cursor = hovered ? 'pointer' : 'default';
+        document.getElementById('musicBtn').addEventListener('click', function() {
+            if (bgMusic.paused) { bgMusic.play(); this.textContent = "AUDIO: ON"; }
+            else { bgMusic.pause(); this.textContent = "AUDIO: OFF"; }
         });
 
-        canvas.addEventListener('click', () => { if (activeNode) window.location.href = activeNode.url; });
-        musicBtn.addEventListener('click', () => {
-            if (bgMusic.paused) { bgMusic.play(); musicBtn.textContent = "ENVIRONMENT AUDIO: ON"; }
-            else { bgMusic.pause(); musicBtn.textContent = "ENVIRONMENT AUDIO: OFF"; }
-        });
-
-        window.addEventListener('resize', () => { resize(); initBackground(); });
+        window.addEventListener('resize', resize);
         resize();
-        initBackground();
         draw();
     </script>
 </body>
 </html>
-
