@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>The Tribute — Home</title>
+<style>
+  :root{
+    --bg:#050505;
+    --gold:#D4AF37;
+    --crimson:#7a1f2b;
+    --muted:rgba(212,175,55,0.12);
+    --glass: rgba(255,255,255,0.03);
+    --card-radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family: Inter, Georgia, serif;
+    background:linear-gradient(180deg,#050505 0%, #070707 100%);
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:48px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:1200px;
+  }
+
+  header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:28px;
+  }
+  .logo{
+    width:64px;
+    height:64px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--muted),transparent);
+    display:grid;
+    place-items:center;
+    font-weight:700;
+    color:var(--gold);
+    border:1px solid rgba(212,175,55,0.14);
+  }
+  h1{
+    margin:0;
+    font-size:20px;
+    letter-spacing:0.6px;
+  }
+  p.lead{
+    margin:6px 0 0;
+    color:rgba(212,175,55,0.9);
+    font-size:13px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:18px;
+  }
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(212,175,55,0.06);
+    border-radius:var(--card-radius);
+    padding:18px;
+    min-height:120px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:transform .28s ease, box-shadow .28s ease;
+    text-decoration:none;
+    color:var(--gold);
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    border-color:var(--gold);
+  }
+  .card .title{
+    font-weight:700;
+    font-size:16px;
+  }
+  .card .plaque{
+    color:rgba(212,175,55,0.9);
+    font-size:13px;
+    margin-top:8px;
+  }
+  .card .cta{
+    margin-top:12px;
+    align-self:flex-end;
+    background:transparent;
+    border:1px solid rgba(212,175,55,0.08);
+    padding:8px 12px;
+    border-radius:10px;
+    color:var(--gold);
+    font-size:13px;
+    text-decoration:none;
+  }
+  .card .cta:hover{
+    background:var(--gold);
+    color:#000;
+    border-color:transparent;
+  }
+
+  /* final center */
+  .center{
+    grid-column:1/-1;
+    display:flex;
+    justify-content:center;
+    margin-top:6px;
+  }
+  .final{
+    padding:14px 26px;
+    border-radius:14px;
+    border:2px solid var(--crimson);
+    color:var(--crimson);
+    background:#000;
+    text-decoration:none;
+    font-weight:700;
+  }
+  .final:hover{
+    background:var(--crimson);
+    color:#000;
+  }
+
+  @media (max-width:980px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:620px){
+    body{padding:18px}
+    .grid{grid-template-columns:1fr}
+    header{flex-direction:column;align-items:flex-start}
+    .logo{width:56px;height:56px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">SK</div>
+      <div>
+        <h1>The Tribute — Grand Index</h1>
+        <p class="lead">Click a portal to enter — all pages are in this repository.</p>
+      </div>
+    </header>
+
+    <main class="grid">
+      <a class="card" href="vending.html">
+        <div>
+          <div class="title">The Automatic Muse</div>
+          <div class="plaque">A virtual vending machine of truths.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="search.html">
+        <div>
+          <div class="title">The Absolute Truth</div>
+          <div class="plaque">A rigged search engine that only returns her.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="spotify.html">
+        <div>
+          <div class="title">The Infinite Melody</div>
+          <div class="plaque">Spotify-wrapped parody celebrating her voice.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="netflix.html">
+        <div>
+          <div class="title">The Living Cinema</div>
+          <div class="plaque">A Netflix-like UI of her life and photos.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="letters.html">
+        <div>
+          <div class="title">The Post of Devotion</div>
+          <div class="plaque">A digital mailbox for letters.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="candleCake.html">
+        <div>
+          <div class="title">The Eternal Flame</div>
+          <div class="plaque">Light candles and celebrate her.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="News.html">
+        <div>
+          <div class="title">The Daily Prophet</div>
+          <div class="plaque">Magical newspaper with stories & video.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="Crosswords.html">
+        <div>
+          <div class="title">The Cryptic Trial</div>
+          <div class="plaque">Crossword puzzle — logs to Firebase.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <a class="card" href="LoveReceipt.html">
+        <div>
+          <div class="title">The Ledger of Love</div>
+          <div class="plaque">A receipt listing "purchased" memories.</div>
+        </div>
+        <div><span class="cta">Open</span></div>
+      </a>
+
+      <div class="center">
+        <a class="final" href="SKmsg.html">The Architect's Heart — Finale</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
